@@ -15,15 +15,9 @@ angular.module('findFood').controller('restaurantController', function ($rootSco
         return $localStorage.currentRestaurant.title;
     };
 
-    $localStorage.guestMailBoxId = $localStorage.currentRestaurant.title;///////////////////////////////////
+    $localStorage.guestMailBoxId = $localStorage.currentRestaurant.title;
 
-//    if (!$localStorage.guestMailBoxId) {
-//        $http.get('http://localhost:8189/ff-restaurants/api/v1/mail_box/generate_id')
-//            .then(function (response) {
-//            $localStorage.guestMailBoxId = response.data.value;
-//            console.log('guestMailBoxId ' + localStorage.guestMailBoxId);///////////////////////////////////
-//        });
-//    }
+
 
     $scope.loadRestaurantInfo = function(restaurant){
         var id;

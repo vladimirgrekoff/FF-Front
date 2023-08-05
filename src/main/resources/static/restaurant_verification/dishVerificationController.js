@@ -21,7 +21,6 @@ angular.module('findFood').controller('dishVerificationController', function ($r
         id = $localStorage.dishId;
          $http.get(contextPath + '/dishes/' + id)
              .then(function (response) {
-                console.log('id блюда загруженного блюда ' + response.data.id);////////////////////////////
                  $scope.dish = response.data;
              });
      };
@@ -33,10 +32,8 @@ angular.module('findFood').controller('dishVerificationController', function ($r
             $scope.item.verified = true;
             $scope.item.dishHealthy = $scope.dishHealthy;
             $scope.item.dishApproved = $scope.dishApproved;
-                console.log('id записи до обновления записи ' + $scope.item.id);////////////////////////////
             $http.put(contextPath + '/requests', $scope.item)
                 .then(function (response) {
-                console.log('id записи в ответе обновления записи ' + response.data);////////////////////////////
                     alert("Изменения в БД внесены");
             });
     };
@@ -47,11 +44,8 @@ angular.module('findFood').controller('dishVerificationController', function ($r
         if ($scope.isEmptyDishData() == false){
             $scope.dish.healthy = $scope.dishHealthy;
             $scope.dish.approved = $scope.dishApproved;
-//            var editedDish = $scope.dish;
-            console.log('id блюда перед обновлением блюда ' + $scope.dish.id);/////////////////////////////////////////////
                 $http.put(contextPath + '/dishes', $scope.dish)
                     .then(function (response) {
-            console.log('id блюда в ответе обновления блюда ' + response.id);/////////////////////////////////////////////
                         $scope.loadDishById();
                         $scope.updateRequestItem();
                 });

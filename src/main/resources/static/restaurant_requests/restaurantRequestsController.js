@@ -19,13 +19,7 @@ angular.module('findFood').controller('restaurantRequestsController', function (
     $scope.requestId;
     $scope.tempId;
 
-//    if (!$localStorage.guestMailBoxId) {
-//        $http.get('http://localhost:8189/ff-restaurants/api/v1/mail_box/generate_id')
-//            .then(function (response) {
-//            $localStorage.guestMailBoxId = response.data.value;
-//            console.log('guestMailBoxId ' + localStorage.guestMailBoxId);///////////////////////////////////
-//        });
-//    }
+
 
 
 
