@@ -12,7 +12,7 @@
   <groupId>ru.findFood</groupId>
   <artifactId>FF-TEST_Front</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>front</name>
+  <name>ru.front</name>
 
   <description>Front service</description>
 
