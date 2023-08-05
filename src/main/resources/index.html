@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<html ng-app="findFood">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-route.min.js"></script>
+    <title>FindFood</title>
+    <style>
+        select {
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem 1.75rem .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            vertical-align: middle;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid" ng-controller="indexController">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" align="center">
+<!--                МЕНЮ ДОМАШНЕЙ СТРАНИЦЫ-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/welcome">Find Food</a>
+                    </li>
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <a class="nav-link" href="#!/restaurants">Список ресторанов</a>
+                    </li>
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <a class="nav-link" href="#!/nutritionist">Страница диетолога</a>
+                    </li>
+
+<!--                МЕНЮ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ НАЧАЛО-->
+                    <ul class="navbar-nav" ng-show="isUserLoggedIn()">
+<!--                МЕНЮ СТРАНИЦЫ ВЫБОРА РЕСТОРАНОВ-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants()">
+                            <a class="nav-link" href="" ng-click="showAddRestaurantForm()">Добавить ресторан</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants()">
+                            <a class="nav-link" href="" ng-click="showDeleteRestaurantButton()">Удалить ресторан</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ ДОМАШНЕЙ СТРАНИЦЫ РЕСТОРАНА-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant()">
+                            <a class="nav-link" href="#!/dishes" >Список блюд</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant()">
+                            <a class="nav-link" href="#!/restaurant_info">Профиль ресторана</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant()">
+                            <a class="nav-link" href="#!/request_create">Запрос диетологу</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ СПИСКА БЛЮД-->
+                        <li class="nav-item" ng-show="isCurrentPageDishes()">
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageDishes()">
+                            <a class="nav-link" href="" ng-click="showDeleteDishButton()">Удалить блюдо</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageDishes()">
+                            <a class="nav-link" href="" ng-click="showEditDishButton()">Изменить блюдо</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageDishes()">
+                            <a class="nav-link" href="#!/dish_new" ng-click="showAddNewDishForm()">Добавить блюдо</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ИНФОРМАЦИИ БЛЮДА-->
+                        <li class="nav-item" ng-show="isCurrentPageDish()">
+                            <a class="nav-link" href="#!/dishes">Вернуться к "Списку блюд"</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageDish()">
+                            <a class="nav-link" href="#!/dish_edit">Изменить блюдо</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ БЛЮДА-->
+                        <li class="nav-item" ng-show="isCurrentPageEditDish()">
+                            <a class="nav-link" href="#!/dishes">Вернуться к "Списку блюд"</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageEditDish()">
+                            <a class="nav-link" href="#!/dish">На страницу блюда</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ДОБАВИТЬ БЛЮДО-->
+                        <li class="nav-item" ng-show="isCurrentPageAddNewDish()">
+                            <a class="nav-link" href="#!/dishes">Вернуться к "Списку блюд"</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРОФИЛЯ РЕСТОРАНА-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurantInfo()">
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurantInfo()">
+                            <a class="nav-link" href="#!/restaurant_edit_info" ng-click="">Изменить данные профиля</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ ПРОФИЛЯ РЕСТОРАНА-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurantEditInfo()">
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurantEditInfo()">
+                            <a class="nav-link" href="#!/restaurant_info">Профиль ресторана</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ СОЗДАНИЯ ЗАПРОСА ДИЕТОЛОГУ-->
+                        <li class="nav-item" ng-show="isCurrentPageCreateRequest()">
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageCreateRequest()">
+                            <a class="nav-link" href="#!/request_send" ng-click="">Просмотр/отправка запроса</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ОТПРАВКИ ЗАПРОСА ДИЕТОЛОГУ-->
+                        <li class="nav-item" ng-show="isCurrentPageSendRequest()">
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageSendRequest()">
+                            <a class="nav-link" href="#!/request_create" ng-click="">Вернуться к созданию запроса</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ ДОМАШНЕЙ СТРАНИЦЫ ДИЕТОЛОГА-->
+                        <li class="nav-item" ng-show="isCurrentPageNutritionist()">
+                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Проверка пришедших запросов</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ВЫБОРА РЕСТОРАНА С ЗАПРОСАМИ-->
+                        <li class="nav-item" ng-show="isCurrentPageNutritionistSelect()">
+                            <a class="nav-link" href="#!/nutritionist">Домашняя страница диетолога</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ЗАПРОСЫ РЕСТОРАНА ДИЕТОЛОГУ-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurantRequests()">
+                            <a class="nav-link" href="#!/nutritionist">Домашняя страница диетолога</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurantRequests()">
+                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Выбор ресторанов с запросами</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРОВЕРКИ БЛЮДА ДИЕТОЛОГОМ-->
+                        <li class="nav-item" ng-show="isCurrentPageDishVerification()">
+                            <a class="nav-link" href="#!/nutritionist">Домашняя страница диетолога</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageDishVerification()">
+                            <a class="nav-link" href="#!/restaurant_requests" ng-click="">Страница запросов ресторана</a>
+                        </li>
+                        <!--       КОНЕЦ МЕНЮ     -->
+                    </ul>
+<!--                МЕНЮ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ КОНЕЦ-->
+<!--                ФОРМА АВТОРИЗАЦИИ ПОЛЬЗОВАТЕЛЕЙ-->
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <form class="align-middle" ng-submit="tryToAuth()">
+                            <div class="input-group input-group-sm" style="padding: 4px;">
+                                <input id="navLoginField" class="form-control" ng-model="user.email" type="text"
+                                       aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                                <input id="navPasswordField" class="form-control" ng-model="user.password" type="password"
+                                       aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+                                <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
+                                        style="margin-left: 10px;" type="submit">Войти
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                    <!--       КОНЕЦ ФОРМЫ     -->
+<!--                КНОПКА ВЫХОД АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ -->
+                    <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
+                        <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+<ng-view></ng-view>
+
+
+<script src="index.js"></script>
+<script src="restaurants/restaurantsController.js"></script>
+<script src="restaurant/restaurantController.js"></script>
+<script src="restaurant_info/restaurantInfoController.js"></script>
+<script src="restaurant_edit_info/restaurantEditInfoController.js"></script>
+<script src="dishes/dishesController.js"></script>
+<script src="dish/dishController.js"></script>
+<script src="dish_edit/dishEditController.js"></script>
+<script src="dish_new/newDishController.js"></script>
+<script src="request_create/createRequestController.js"></script>
+<script src="request_send/sendRequestController.js"></script>
+<script src="restaurant_requests/restaurantRequestsController.js"></script>
+<script src="restaurant_verification/dishVerificationController.js"></script>
+<script src="nutritionist/nutritionistController.js"></script>
+<script src="nutritionist_select/selectRestaurantController.js"></script>
+<script src="welcome/welcomeController.js"></script>
+
+</div>
+</body>
+</html>
