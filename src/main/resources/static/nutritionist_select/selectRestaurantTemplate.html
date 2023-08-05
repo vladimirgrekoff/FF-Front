@@ -1,0 +1,27 @@
+<div class="container" ng-controller="selectRestaurantController">
+    <p></p>
+    <h3 align="center">Выбор ресторана для проверки наличия запросов</h3>
+    <p></p>
+
+    <p></p>
+    <table class="table table-striped" width="80%" align="center">
+        <thead>
+        <tr>
+            <td width="10%"><b>ID</b></td>
+            <td width="60%"><b>Название</b></td>
+            <td width="30%"><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="r in RestaurantsList">
+            <td width="10%">{{r.id}}</td>
+            <td width="60%">{{r.title}}</td>
+
+            <td width="30%">
+                <button class="btn btn-primary" ng-click="showRestaurantRequestPage(r)">Страница запросов</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

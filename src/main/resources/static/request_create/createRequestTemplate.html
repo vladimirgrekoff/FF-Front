@@ -1,0 +1,129 @@
+<div class="container" ng-controller="createRequestController">
+    <p>&nbsp;</p>
+<h2 align="center">Составить запрос ресторана {{showCurrentRestaurantTitle()}} диетологу</h2>
+<!--    <p>&nbsp;</p>-->
+<!--<table class="table" cellpadding="0" cellspacing="0" width="80%" align="center">-->
+<!--    <tr>-->
+<!--        <td width="40%">-->
+<!--            <form novalidate ng-submit="loadProducts()">-->
+<!--                <div class="form-floating input-group-sm">-->
+<!--                    <input type="text" class="form-control" id="filterTitle" placeholder="Наименование продукта" ng-model="filter.part_title">-->
+<!--                </div>-->
+<!--                <p></p>-->
+<!--                <div class="form-floating input-group-sm">-->
+<!--                    <input type="number" class="form-control" id="filterMinPrice" placeholder="Мин. цена" ng-model="filter.min_price">-->
+<!--                </div>-->
+<!--                <p></p>-->
+<!--                <div class="form-floating input-group-sm">-->
+<!--                    <input type="number" class="form-control" id="filterMaxPrice" placeholder="Макс. цена" ng-model="filter.max_price">-->
+<!--                </div>-->
+<!--                <p></p>-->
+<!--                <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>-->
+<!--            </form>-->
+<!--        </td>-->
+<!--        &lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--        <td width="60%">-->
+<!--            <table align="center">-->
+<!--                <tr>-->
+<!--                    <td ><b>Перейти:</b></td>-->
+<!--                    <td>&nbsp;</td>-->
+<!--                    <td width="35%">-->
+<!--                        <button type="button" class="btn btn-outline-info btn-sm" style="width: 100%;" ng-click="showNavigationPage()">Страница навигации</button>-->
+<!--                    </td>-->
+<!--                    <td width="35%">-->
+<!--&lt;!&ndash;                        <button type="button" class="btn btn-outline-danger btn-sm" style="width: 100%;" onclick="location.href = 'logout'">Выход</button>&ndash;&gt;-->
+<!--                        <button type="button" class="btn btn-outline-danger btn-sm" style="width: 100%;" ng-click="tryLogout()">Выход</button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td colspan="4"><b>Страницы:</b></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td colspan="4">-->
+<!--                        <a class="btn btn-outline-primary" ng-click="loadProducts(0, 30)">показать все</a>-->
+<!--                        <a class="btn btn-outline-primary" ng-click="loadProducts(0, 5)">страница 1</a>-->
+<!--                        <a class="btn btn-outline-primary" ng-click="loadProducts(-1 , 5)">&lt;&lt;</a>-->
+<!--                        <a class="btn btn-outline-primary" ng-click="loadProducts(1, 5)">&gt;&gt;</a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+
+<!--            </table>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+<p>&nbsp;</p>
+<h3 align="center">Список блюд</h3>
+    <p>&nbsp;</p>
+    <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center">
+        <thead>
+        <tr>
+            <td><b>ID</b></td>
+            <td><b>Название</b></td>
+            <td><b>Описание</b></td>
+            <td><b>Группа блюд</b></td>
+            <td><b>Калории</b></td>
+            <td><b>Белки</b></td>
+            <td><b>Жиры</b></td>
+            <td><b>Углеводы</b></td>
+            <td><b>Здоровое питание</b></td>
+            <td><b>Одобрено диетологом</b></td>
+            <td><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in DishesList">
+            <td>{{d.id}}</td>
+            <td>{{d.title}}</td>
+            <td>{{d.description}}</td>
+            <td>{{d.group_dish_title}}</td>
+            <td>{{d.calories}}</td>
+            <td>{{d.proteins}}</td>
+            <td>{{d.fats}}</td>
+            <td>{{d.carbohydrates}}</td>
+            <td>{{d.healthy}}</td>
+            <td>{{d.approved}}</td>
+            <td><button class="btn btn-outline-success" ng-click="addDishToMailBox(d.id)">В запрос</button></td>
+    <tbody>
+</table>
+
+<!--<h2 align="center">Выбранные блюда для отправки запроса диетологу</h2>-->
+<!--    <p>&nbsp;</p>-->
+<!--<table class="table table-striped" width="80%" cellpadding="0" cellspacing="0">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <td><b>ID</b></td>-->
+<!--        <td><b>Название</b></td>-->
+<!--        <td><b>Описание</b></td>-->
+<!--        <td><b>Группа блюд</b></td>-->
+<!--        <td><b>Калории</b></td>-->
+<!--        <td><b>Белки</b></td>-->
+<!--        <td><b>Жиры</b></td>-->
+<!--        <td><b>Углеводы</b></td>-->
+<!--        <td><b>Здоровое питание</b></td>-->
+<!--        <td><b>Одобрено диетологом</b></td>-->
+<!--        <td colspan="2" align="center"><b>Действие</b></td>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr ng-repeat="item in mailBox.items">-->
+<!--        <td>{{item.dishId}}</td>-->
+<!--        <td>{{item.dishTitle}}</td>-->
+<!--        <td>{{item.dishDescription}}</td>-->
+<!--        <td>{{item.dishGroupDishTitle}}</td>-->
+<!--        <td>{{item.dishCalories}}</td>-->
+<!--        <td>{{item.dishProteins}}</td>-->
+<!--        <td>{{item.dishFats}}</td>-->
+<!--        <td>{{item.dishCarbohydrates}}</td>-->
+<!--        <td>{{item.dishHealthy}}</td>-->
+<!--        <td>{{item.dishApproved}}</td>-->
+<!--        <td align="center"><button type="button" class="btn btn-outline-danger" ng-click="deleteDishFromMailBox(item.dishId)">Удалить</button></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>&nbsp;</td>-->
+<!--        <td colspan="3"><b><i>Выбор решения:</i></b></td>-->
+<!--        <td colspan="4" align="left"><button type="button" class="btn btn-outline-danger" ng-click="clearMailBox()">Отменить все</button></td>-->
+<!--        <td colspan="4" align="left"><button type="button" class="btn btn-outline-success" ng-click="createRequestToNutritionist()">Отправить запрос</button></td>-->
+<!--    </tr>-->
+<!--    <tbody>-->
+<!--</table>-->
+</div>

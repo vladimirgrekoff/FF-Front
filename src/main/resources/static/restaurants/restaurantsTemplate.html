@@ -1,0 +1,55 @@
+<div class="container" ng-controller="restaurantsController">
+    <p></p>
+    <h3 align="center">Список ресторанов</h3>
+    <p></p>
+
+    <p></p>
+    <table class="table table-striped" width="80%" align="center">
+        <thead>
+        <tr>
+            <td width="10%"><b>ID</b></td>
+            <td width="60%"><b>Название</b></td>
+            <td width="30%" ng-show="showDelButton"><b>Действие</b></td>
+            <td width="30%" ng-show="!showDelButton" colspan="2" align="center"><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="r in RestaurantsList">
+            <td width="10%">{{r.id}}</td>
+            <td width="60%">{{r.title}}</td>
+
+            <td width="30%" ng-show="showDelButton">
+                <button class="btn btn-primary" ng-click="showRestaurantPage(r)">Страница ресторана</button>
+            </td>
+            <td width="15%" ng-show="!showDelButton">
+                <button class="btn btn-primary" ng-click="showRestaurantPage(r)">Страница ресторана</button>
+            </td>
+            <td width="15%" ng-show="!showDelButton">
+                <button class="btn btn-danger" ng-click="deleteRestaurant(r.id)">Удалить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div align="center"  ng-show="!showAddRestaurantForm">
+        <h3 align="center">Добавить ресторан в БД</h3>
+        <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center">
+            <thead>
+            <tr>
+                <td width="50%"><b>Название ресторана</b></td>
+                <td width="20%">&nbsp;</td>
+                <td width="30%"><b>Действие</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <form class="form-floating input-group">
+                    <td width="50%"><input class="form-control" type="text" ng-model="newRestaurant.title" id="title" name="title" placeholder="Название ресторана" required/></td>
+                    <td width="20%">&nbsp;</td>
+                    <td width="30%"><button class="btn btn-primary" type="button" ng-click="addNewRestaurant()">Добавить в список</button></td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
