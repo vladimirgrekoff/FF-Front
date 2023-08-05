@@ -7,7 +7,6 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
     $rootScope.currentPage = 'request_send';
 
 
-
     if($rootScope.currentPage != 'restaurant'){
         $rootScope.activeContent = '';
     }
@@ -16,13 +15,35 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
 
     restaurant = $localStorage.currentRestaurant;
 
+    $scope.showCurrentRestaurantTitle = function(){
+        return $localStorage.currentRestaurant.title;
+    };
 
-    $scope.currentRestaurantTitle = $localStorage.currentRestaurant.title;
 
 
+
+//    $scope.loadDishes = function (offset, limit) {
+//            $http({
+//                url: contextPath + '/dishes',
+//                method: 'GET',
+//                params: {
+//                    min_price: $scope.filter ? $scope.filter.min_price : null,
+//                    max_price: $scope.filter ? $scope.filter.max_price : null,
+//                    part_title: $scope.filter ? $scope.filter.part_title : null,
+//                    offset: offset,
+//                    limit: limit
+//                }
+//            }).then(function (response) {
+//                $scope.DishesList = response.data.content;
+//        });
+//    };
+
+
+
+//    console.log('ящик ' + $localStorage.guestMailBoxId);/////////////////////////////////
 
     $scope.loadMailBox = function () {
-            $http.get(contextPath + '/mail_box/' + $localStorage.restMailBoxId)
+            $http.get(contextPath + '/mail_box/' + $localStorage.guestMailBoxId)
                 .then(function (response) {
                 $scope.mailBox = response.data;
         });
@@ -30,14 +51,14 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
 
 
     $scope.deleteDishFromMailBox = function (dishId) {
-        $http.delete(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/delete/' + dishId)
+        $http.delete(contextPath + '/mail_box/' + $localStorage.guestMailBoxId + '/delete/' + dishId)
             .then(function (response) {
                 $scope.loadMailBox();
             });
     };
 
     $scope.clearMailBox = function () {
-        $http.delete(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/clear')
+        $http.delete(contextPath + '/mail_box/' + $localStorage.guestMailBoxId + '/clear')
             .then(function (response) {
                 $scope.loadMailBox();
             });
@@ -45,23 +66,11 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
 
 
     $scope.createRequestToNutritionist = function () {
-        if($scope.isMailBoxEmpty()){
-            alert('В запросе нет ни одного блюда!!! ' +
-            '\nДля отправки запрос должен содержать ' +
-            '\nминимум одно блюдо в списке.');
-            return;
-        }
-        $http.post(contextPath + '/requests', $localStorage.restMailBoxId)
+        $http.post(contextPath + '/requests', $localStorage.guestMailBoxId)
             .then(function (response) {
+            console.log('ответ на оправку запроса ' + response);///////////////////////////////
                 $scope.loadMailBox();
             });
-    };
-
-    $scope.isMailBoxEmpty = function () {
-        if($scope.mailBox.items.length == 0){
-            return true;
-        }
-        return false;
     };
 
 

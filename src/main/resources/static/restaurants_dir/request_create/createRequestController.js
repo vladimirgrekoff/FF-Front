@@ -11,13 +11,32 @@ angular.module('findFood').controller("createRequestController", function($rootS
         $rootScope.activeContent = '';
     }
 
-
-
     var restaurant;
 
     restaurant = $localStorage.currentRestaurant;
 
-    $scope.currentRestaurantTitle = $localStorage.currentRestaurant.title;
+    $scope.showCurrentRestaurantTitle = function(){
+        return $localStorage.currentRestaurant.title;
+    };
+
+
+
+
+//    $scope.loadDishes = function (offset, limit) {
+//            $http({
+//                url: contextPath + '/dishes',
+//                method: 'GET',
+//                params: {
+//                    min_price: $scope.filter ? $scope.filter.min_price : null,
+//                    max_price: $scope.filter ? $scope.filter.max_price : null,
+//                    part_title: $scope.filter ? $scope.filter.part_title : null,
+//                    offset: offset,
+//                    limit: limit
+//                }
+//            }).then(function (response) {
+//                $scope.DishesList = response.data.content;
+//        });
+//    };
 
      $scope.loadAllDishesByRestaurantId = function () {
         var id;
@@ -28,14 +47,12 @@ angular.module('findFood').controller("createRequestController", function($rootS
              });
      };
 
-
+//    console.log('ящик ' + $localStorage.guestMailBoxId);/////////////////////////////////
 
 
 
     $scope.loadMailBox = function () {
-        let restMailBoxId = $localStorage.restMailBoxId;
-                console.log('$localStorage.restMailBoxId ' + restMailBoxId);///////////////////////
-            $http.get(contextPath + '/mail_box/' + restMailBoxId)
+            $http.get(contextPath + '/mail_box/' + $localStorage.guestMailBoxId)
                 .then(function (response) {
                 $scope.mailBox = response.data;
         });
@@ -47,7 +64,7 @@ angular.module('findFood').controller("createRequestController", function($rootS
             alert('Блюдо уже есть в списке!!!\nПопробуйте выбрать другое.');
             return;
         }
-        $http.get(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/add/' +dishId)
+        $http.get(contextPath + '/mail_box/' + $localStorage.guestMailBoxId + '/add/' +dishId)
             .then(function (response) {
                 dishId = null;
                 $scope.loadMailBox();
@@ -66,20 +83,6 @@ angular.module('findFood').controller("createRequestController", function($rootS
     }
 
 
-//    $scope.tryToLogout = function () {
-//        $scope.clearUser();
-//        $localStorage.$reset();
-//        $location.path('welcome');
-//    };
-
-//    $scope.tryLogout = function() {
-//        if($rootScope.logout){
-//            $location.path('welcome');
-//            $rootScope.logout();
-//        } else{
-//            $location.path('welcome');
-//        }
-//    };
 
 
     $scope.loadAllDishesByRestaurantId();
