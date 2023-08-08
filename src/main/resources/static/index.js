@@ -14,72 +14,72 @@
 
         })
         .when('/restaurants', {
-            templateUrl:'restaurants/restaurantsTemplate.html',
+            templateUrl:'restaurants_dir/restaurants/restaurantsTemplate.html',
             controller:'restaurantsController',
             controllerAs:'restaurants'
         })
         .when('/restaurant', {
-            templateUrl:'restaurant/restaurantTemplate.html',
+            templateUrl:'restaurants_dir/restaurant/restaurantTemplate.html',
             controller:'restaurantController',
             controllerAs:'restaurant'
         })
         .when('/restaurant_info', {
-            templateUrl:'restaurant_info/restaurantInfoTemplate.html',
+            templateUrl:'restaurants_dir/restaurant_info/restaurantInfoTemplate.html',
             controller:'restaurantInfoController',
             controllerAs:'restaurant_info'
         })
         .when('/restaurant_edit_info', {
-            templateUrl:'restaurant_edit_info/restaurantEditInfoTemplate.html',
+            templateUrl:'restaurants_dir/restaurant_edit_info/restaurantEditInfoTemplate.html',
             controller:'restaurantEditInfoController',
             controllerAs:'restaurant_edit_info'
         })
         .when('/dishes', {
-            templateUrl:'dishes/dishesTemplate.html',
+            templateUrl:'restaurants_dir/dishes/dishesTemplate.html',
             controller:'dishesController',
             controllerAs:'dishes'
         })
         .when('/dish', {
-            templateUrl:'dish/dishTemplate.html',
+            templateUrl:'restaurants_dir/dish/dishTemplate.html',
             controller:'dishController',
             controllerAs:'dish'
         })
         .when('/dish_edit', {
-            templateUrl:'dish_edit/dishEditTemplate.html',
+            templateUrl:'restaurants_dir/dish_edit/dishEditTemplate.html',
             controller:'dishEditController',
             controllerAs:'dish_edit'
         })
         .when('/dish_new', {
-            templateUrl:'dish_new/newDishTemplate.html',
+            templateUrl:'restaurants_dir/dish_new/newDishTemplate.html',
             controller:'newDishController',
             controllerAs:'dish_new'
         })
         .when('/request_create', {
-            templateUrl:'request_create/createRequestTemplate.html',
+            templateUrl:'restaurants_dir/request_create/createRequestTemplate.html',
             controller:'createRequestController',
             controllerAs:'request_create'
         })
         .when('/request_send', {
-            templateUrl:'request_send/sendRequestTemplate.html',
+            templateUrl:'restaurants_dir/request_send/sendRequestTemplate.html',
             controller:'sendRequestController',
             controllerAs:'request_send'
         })
         .when('/restaurant_requests', {
-            templateUrl:'restaurant_requests/restaurantRequestsTemplate.html',
+            templateUrl:'restaurants_dir/restaurant_requests/restaurantRequestsTemplate.html',
             controller:'restaurantRequestsController',
             controllerAs:'restaurant_requests'
         })
         .when('/restaurant_verification', {
-            templateUrl:'restaurant_verification/dishVerificationTemplate.html',
+            templateUrl:'restaurants_dir/restaurant_verification/dishVerificationTemplate.html',
             controller:'dishVerificationController',
             controllerAs:'restaurant_verification'
         })
         .when('/nutritionist', {
-            templateUrl:'nutritionist/nutritionistTemplate.html',
+            templateUrl:'nutritionist_dir/nutritionist/nutritionistTemplate.html',
             controller:'nutritionistController',
             controllerAs:'nutritionist'
         })
         .when('/nutritionist_select', {
-            templateUrl:'nutritionist_select/selectRestaurantTemplate.html',
+            templateUrl:'nutritionist_dir/nutritionist_select/selectRestaurantTemplate.html',
             controller:'selectRestaurantController',
             controllerAs:'nutritionist_select'
         })
@@ -97,7 +97,6 @@
                 let payload = JSON.parse(atob(jwt.split('.')[1]));
 
                 let currentTime = parseInt(new Date().getTime() / 1000);
-                console.log('currentTime ' + currentTime );/////////////////////////////////
                 if (currentTime > payload.exp) {
                     console.log("Token is expired!!!");
                     delete $localStorage.findFoodUser;
@@ -118,17 +117,6 @@
 angular.module('findFood').controller('indexController', function ($rootScope, $scope, $http, $location, $localStorage) {
 
     $scope.tryToAuth = function () {
-//        var headers = {
-//                    'Access-Control-Allow-Origin': true,
-//                    'Origin',
-//                    'Access-Control-Request-Headers': 'Authorization',
-//                    'Access-Control-Request-Method': 'POST',
-//                    'Content-Type': 'application/json; charset=utf-8',
-//                    "X-Requested-With": "XMLHttpRequest"
-//        }
-//        $http.post('http://localhost:8100/ff-auth/api/v1/authenticate', $scope.user, {headers})
-//        $http.post('http://localhost:8100/ff-auth/api/v1/authenticate', $scope.user)
-//        $http.post('http://localhost:5555/auth/api/v1/authenticate', $scope.user, {headers})
         $http.post('http://localhost:5555/auth/api/v1/authenticate', $scope.user)
             .then(function successCallback(response) {
 
@@ -153,20 +141,13 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
         if($localStorage.findFoodUser.roles == 'NUTRITIONIST'){
             $location.path('nutritionist');
         } else if($localStorage.findFoodUser.roles == 'RESTAURANT'){
-            $scope.setCurrentRestaurant();
             $location.path('restaurant');
         } else {
-            $location.path('/');
+            $location.path('welcome');
         }
     };
 
-    $scope.setCurrentRestaurant = function () {
-//        $http.get('http://localhost:8189/ff-restaurants/api/v1/restaurants/email/' + $localStorage.findFoodUser.email)
-        $http.get('http://localhost:5555/rest/api/v1/restaurants/email/' + $localStorage.findFoodUser.email)
-            .then(function (response) {
-                $localStorage.currentRestaurant = response.data;
-            });
-    };
+
 
 
     $rootScope.getRole = function () {
@@ -176,17 +157,23 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
     };
 
     $scope.tryToLogout = function () {
+        $location.path('welcome');
         $scope.clearUser();
-        delete $localStorage.currentRestaurant;
-        delete $localStorage.guestMailBoxId;
+        $localStorage.$reset();
+    };
+
+
+
+    $rootScope.logout = function() {
+        $localStorage.$reset();
         $location.path('welcome');
     };
 
     $scope.clearUser = function () {
-        $localStorage.findFoodUser.roles = '';
-        delete $localStorage.findFoodUser;
         $http.defaults.headers.common.Authorization = '';
     };
+
+
 
     $rootScope.isUserLoggedIn = function () {
         if ($localStorage.findFoodUser) {

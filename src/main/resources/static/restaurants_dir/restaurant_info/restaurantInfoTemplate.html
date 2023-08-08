@@ -1,0 +1,46 @@
+<div ng-controller="restaurantInfoController">
+    <p>&nbsp;</p>
+
+    <div class="container" align="center">
+        <h4 align="center">Профиль ресторана {{currentRestaurantTitle}}</h4>
+        <p>&nbsp;</p>
+        <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center" ng-model="restaurantInfo">
+            <thead>
+            <tr>
+                <td width="40%"><b>Поля профиля</b></td><td width="40%"><b>Значение</b></td>
+            </tr>
+            </thead>
+            <tr>
+                <td width="40%">ID информации о ресторане</td><td width="40%">{{restaurantInfo.id}}</td>
+            </tr>
+            <tr>
+                <td width="40%">ID ресторана</td><td width="40%">{{restaurantInfo.restaurantId}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Описание</td><td width="40%">{{restaurantInfo.description}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Кухни</td><td width="40%">{{restaurantInfo.cuisines}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Адрес</td><td width="40%">{{restaurantInfo.address}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Номер телефона</td><td width="40%">{{restaurantInfo.phoneNumber}}</td>
+            </tr>
+            <tr>
+                <td width="40%">E-mail</td><td width="40%">{{restaurantInfo.email}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Часы работы</td><td width="40%">{{restaurantInfo.openHours}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Добавлено в список</td><td width="40%">{{restaurantInfo.createdAt}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Изменено</td><td width="40%">{{restaurantInfo.updatedAt}}</td>
+            </tr>
+            <tbody>
+        </table>
+    </div>
+</div>

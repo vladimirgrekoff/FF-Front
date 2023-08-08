@@ -1,0 +1,76 @@
+<div ng-controller="dishVerificationController">
+    <p>&nbsp;</p>
+    <div class="container" align="center">
+        <h4 align="center">Отметки диетолога в описании блюда ресторана {{currentRestaurantTitle}}</h4>
+    <p>&nbsp;</p>
+    <table class="table table-striped" width="60%" cellpadding="0" cellspacing="0" align="center">
+        <thead>
+        <tr>
+            <td width="30%"><b>Пункт описания</b></td><td width="30%"><b>Значение</b></td>
+        </tr>
+        </thead>
+        <tr>
+            <td><b>ID запроса</b></td><td>{{item.requestId}}</td>
+        </tr>
+        <tr>
+            <td><b>ID записи</b></td><td>{{item.id}}</td>
+        </tr>
+        <tr>
+            <td><b>ID блюда</b></td><td>{{dish.id}}</td>
+        </tr>
+        <tbody>
+        <tr>
+            <td><b>Название блюда</b></td><td><b>{{dish.title}}</b></td>
+        </tr>
+        <tr>
+            <td><b>Описание блюда</b></td><td>{{dish.description}}</td>
+        </tr>
+        <tr>
+            <td><b>Группа блюд</b></td><td>{{dish.group_dish_title}}</td>
+        </tr>
+        <tr>
+            <td><b>Калории</b></td><td>{{dish.calories}}</td>
+        </tr>
+        <tr>
+            <td><b>Белки</b></td><td>{{dish.proteins}}</td>
+        </tr>
+        <tr>
+            <td><b>Жиры</b></td><td>{{dish.fats}}</td>
+        </tr>
+        <tr>
+            <td><b>Углеводы</b></td><td>{{dish.carbohydrates}}</td>
+        </tr>
+        <tr>
+            <td><b>Здоровое питание</b></td>
+            <td>
+                <form name="groupSelect" novalidate>
+                    <select class="form-select" id="dishHealthy" name="healthy" ng-model="dishHealthy" ng-init="selected" required>
+                        <option value="" selected>Выбор оценки</option>
+                        <option value="false">Без оценки</option>
+                        <option value="true">Здоровое</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Одобрено диетологом</b></td>
+            <td>
+                <form name="groupSelect" novalidate>
+                    <select class="form-select" id="dishApprovedVal" name="dishApproved" ng-model="dishApproved" ng-init="dishApprovedVal=selected" required>
+                        <option ng-selected="selected" value="" selected>Выбор оценки</option>
+                        <option value="false">Без оценки</option>
+                        <option value="true">Одобрено</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        <tr>
+        <td align="center"><button class="btn btn-outline-danger btn-sm" style="width: 70%;" type="button" ng-click="updateDish()">Сохранить</button></td>
+        <td align="center"><button type="button" class="btn btn-outline-success btn-sm" style="width: 70%;" ng-click="showRestaurantRequestsPage()">К запросам ресторана</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div ng-controller="restaurantController">
+    <p>&nbsp;</p>
+    <h2 align="center">Страница ресторана {{currentRestaurantTitle}}</h2>
+
+    <p>&nbsp;</p>
+
+    <div class="container" align="center">
+        <h4>О нас</h4>
+        <p>{{restaurantInfo.description}}</p>
+
+
+        <h4>Кухни ресторана</h4>
+        <p>{{restaurantInfo.cuisines}}</p>
+
+
+        <h4>Наш адрес</h4>
+        <p>{{restaurantInfo.address}}</p>
+
+        <h4>Контакты</h4>
+        <p><b>Номер телефона:</b> {{restaurantInfo.phoneNumber}}</p>
+
+
+        <p><b>E-mail:</b> {{restaurantInfo.email}}</p>
+
+
+        <h4>Часы работы</h4>
+        <p>{{restaurantInfo.openHours}}</p>
+
+
+
+    </div>
+</div>

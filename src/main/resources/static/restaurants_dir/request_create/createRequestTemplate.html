@@ -1,0 +1,41 @@
+<div class="container" ng-controller="createRequestController">
+    <p>&nbsp;</p>
+<h2 align="center">Составить запрос ресторана {{currentRestaurantTitle}} диетологу</h2>
+
+<p>&nbsp;</p>
+<h3 align="center">Список блюд</h3>
+    <p>&nbsp;</p>
+    <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center">
+        <thead>
+        <tr>
+            <td><b>ID</b></td>
+            <td><b>Название</b></td>
+            <td><b>Описание</b></td>
+            <td><b>Группа блюд</b></td>
+            <td><b>Калории</b></td>
+            <td><b>Белки</b></td>
+            <td><b>Жиры</b></td>
+            <td><b>Углеводы</b></td>
+            <td><b>Здоровое питание</b></td>
+            <td><b>Одобрено диетологом</b></td>
+            <td><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in DishesList">
+            <td>{{d.id}}</td>
+            <td>{{d.title}}</td>
+            <td>{{d.description}}</td>
+            <td>{{d.group_dish_title}}</td>
+            <td>{{d.calories}}</td>
+            <td>{{d.proteins}}</td>
+            <td>{{d.fats}}</td>
+            <td>{{d.carbohydrates}}</td>
+            <td>{{d.healthy}}</td>
+            <td>{{d.approved}}</td>
+            <td><button class="btn btn-outline-success" ng-click="addDishToMailBox(d.id)">В запрос</button></td>
+    <tbody>
+</table>
+
+
+</div>

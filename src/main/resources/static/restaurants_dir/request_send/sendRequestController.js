@@ -1,0 +1,76 @@
+angular.module('findFood').controller("sendRequestController", function($rootScope, $scope, $http, $location, $window, $localStorage) {
+
+//    const contextPath = 'http://localhost:8189/ff-restaurants/api/v1';
+    const contextPath = 'http://localhost:5555/rest/api/v1';
+
+    //включение дополнительных пунктов меню для страницы
+    $rootScope.currentPage = 'request_send';
+
+
+
+    if($rootScope.currentPage != 'restaurant'){
+        $rootScope.activeContent = '';
+    }
+
+    var restaurant;
+
+    restaurant = $localStorage.currentRestaurant;
+
+
+    $scope.currentRestaurantTitle = $localStorage.currentRestaurant.title;
+
+
+
+    $scope.loadMailBox = function () {
+            $http.get(contextPath + '/mail_box/' + $localStorage.restMailBoxId)
+                .then(function (response) {
+                $scope.mailBox = response.data;
+        });
+    };
+
+
+    $scope.deleteDishFromMailBox = function (dishId) {
+        $http.delete(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/delete/' + dishId)
+            .then(function (response) {
+                $scope.loadMailBox();
+            });
+    };
+
+    $scope.clearMailBox = function () {
+        $http.delete(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/clear')
+            .then(function (response) {
+                $scope.loadMailBox();
+            });
+    };
+
+
+    $scope.createRequestToNutritionist = function () {
+        if($scope.isMailBoxEmpty()){
+            alert('В запросе нет ни одного блюда!!! ' +
+            '\nДля отправки запрос должен содержать ' +
+            '\nминимум одно блюдо в списке.');
+            return;
+        }
+        $http.post(contextPath + '/requests', $localStorage.restMailBoxId)
+            .then(function (response) {
+                $scope.loadMailBox();
+            });
+    };
+
+    $scope.isMailBoxEmpty = function () {
+        if($scope.mailBox.items.length == 0){
+            return true;
+        }
+        return false;
+    };
+
+
+    //переходы
+    $scope.showCreateRequestPage = function () {
+        $location.path('request_create');
+    };
+
+
+    $scope.loadMailBox();
+
+});

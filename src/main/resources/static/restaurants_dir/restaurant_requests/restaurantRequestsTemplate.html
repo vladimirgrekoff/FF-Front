@@ -1,0 +1,73 @@
+<div ng-controller="restaurantRequestsController">
+    <p>&nbsp;</p>
+    <h2 align="center">Запросы ресторана {{currentRestaurantTitle}}</h2>
+    <p>&nbsp;</p>
+    <div class="container">
+        <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center">
+            <thead>
+            <tr>
+                <td><b>ID запроса</b></td>
+                <td><b>Название ресторана</b></td>
+                <td><b>Дата запроса</b></td>
+                <td><b>Детали запроса</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  ng-repeat="rq in restaurantRequests">
+                <td>{{rq.id}}</td>
+                <td>{{rq.restaurantName}}</td>
+                <td>{{rq.createdAt}}</td>
+                <td>
+                    <button class="btn btn-outline-success" ng-click="showDetailsItems(rq); showDetailsTable()" >Показать</button>
+                </td>
+                </td>
+            </tr>
+            <tbody>
+        </table>
+    </div>
+
+    <div ng-show="!showDetails" class="container-fluid">
+        <p>&nbsp;</p>
+        <h2 align="center">Детали запроса № {{requestId}}</h2>
+        <p>&nbsp;</p>
+    <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center">
+        <thead>
+        <tr ng-model="requestItems">
+            <td><b>ID</b></td>
+            <td><b>ID запроса</b></td>
+            <td><b>ID блюда</b></td>
+            <td><b>Название</b></td>
+            <td><b>Описание</b></td>
+            <td><b>Группа блюд</b></td>
+            <td><b>Калории</b></td>
+            <td><b>Белки</b></td>
+            <td><b>Жиры</b></td>
+            <td><b>Углеводы</b></td>
+            <td><b>Здоровое питание</b></td>
+            <td><b>Одобрено диетологом</b></td>
+            <td><b>Блюдо проверено</b></td>
+            <td><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in requestItems">
+            <td>{{item.id}}</td>
+            <td>{{item.requestId}}</td>
+            <td>{{item.dishId}}</td>
+            <td>{{item.dishTitle}}</td>
+            <td>{{item.dishDescription}}</td>
+            <td>{{item.dishGroupDishTitle}}</td>
+            <td>{{item.dishCalories}}</td>
+            <td>{{item.dishProteins}}</td>
+            <td>{{item.dishFats}}</td>
+            <td>{{item.dishCarbohydrates}}</td>
+            <td>{{item.dishHealthy}}</td>
+            <td>{{item.dishApproved}}</td>
+            <td>{{item.verified}}</td>
+            <td><button class="btn btn-outline-primary" ng-click="showDishVerificationPage(requestId,item)">Проверить</button></td>
+        </tr>
+        <tbody>
+    </table>
+    </div>
+</tr>
+</div>
