@@ -15,28 +15,10 @@ angular.module('findFood').controller("createRequestController", function($rootS
 
     restaurant = $localStorage.currentRestaurant;
 
-    $scope.showCurrentRestaurantTitle = function(){
-        return $localStorage.currentRestaurant.title;
-    };
+    $scope.currentRestaurantTitle = $localStorage.currentRestaurant.title;
 
 
 
-
-//    $scope.loadDishes = function (offset, limit) {
-//            $http({
-//                url: contextPath + '/dishes',
-//                method: 'GET',
-//                params: {
-//                    min_price: $scope.filter ? $scope.filter.min_price : null,
-//                    max_price: $scope.filter ? $scope.filter.max_price : null,
-//                    part_title: $scope.filter ? $scope.filter.part_title : null,
-//                    offset: offset,
-//                    limit: limit
-//                }
-//            }).then(function (response) {
-//                $scope.DishesList = response.data.content;
-//        });
-//    };
 
      $scope.loadAllDishesByRestaurantId = function () {
         var id;
@@ -47,7 +29,7 @@ angular.module('findFood').controller("createRequestController", function($rootS
              });
      };
 
-//    console.log('ящик ' + $localStorage.guestMailBoxId);/////////////////////////////////
+
 
 
 
