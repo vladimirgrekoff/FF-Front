@@ -45,7 +45,6 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
     $scope.createRequestToNutritionist = function () {
         $http.post(contextPath + '/requests', $localStorage.guestMailBoxId)
             .then(function (response) {
-            console.log('ответ на оправку запроса ' + response);///////////////////////////////
                 $scope.loadMailBox();
             });
     };
