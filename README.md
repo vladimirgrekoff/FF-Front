@@ -9,6 +9,6 @@ A web interface that provides interaction with the microservices of the FindFood
 * Menu selection page
 
 ### Technologies
-* angular js
-* bootstrap
+* Angular js
+* Bootstrap
 * ngStorage
