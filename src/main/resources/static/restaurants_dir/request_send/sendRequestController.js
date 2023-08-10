@@ -6,6 +6,9 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
     //включение дополнительных пунктов меню для страницы
     $rootScope.currentPage = 'request_send';
 
+    $scope.valueRequest = {
+        value: ''
+    };
 
     if($rootScope.currentPage != 'restaurant'){
         $rootScope.activeContent = '';
@@ -43,7 +46,8 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
 
 
     $scope.createRequestToNutritionist = function () {
-        $http.post(contextPath + '/requests', $localStorage.restMailBoxId)
+        $scope.valueRequest.value =  $localStorage.restMailBoxId;
+        $http.post(contextPath + '/requests', $scope.valueRequest)
             .then(function (response) {
                 $scope.loadMailBox();
             });

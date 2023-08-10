@@ -31,7 +31,7 @@
             </td>
         </tr>
         <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Название</b></td><td>{{title}}</td><td>{{title}}</td></tr>
-        <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Описание</b></td><<td>{{description}}</td><td>{{description}}</td></tr>
+        <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Описание</b></td><td>{{description}}</td><td>{{description}}</td></tr>
         <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Группа блюд</b></td><td>{{group_dish_title}}</td><td>{{group_dish_title}}</td></tr>
         <tr>
             <td><b>Калории</b></td><td>{{calories}}</td><td><input class="form-control" type="number" ng-model="editedDish.calories" id="calories" name="calories" placeholder="Калории" required/></td>
@@ -45,9 +45,10 @@
         <tr>
             <td><b>Углеводы</b></td><td>{{carbohydrates}}</td><td><input class="form-control" type="number" ng-model="editedDish.carbohydrates" id="carbohydrates" name="carbohydrates" placeholder="Углеводы" required/></td>
         </tr>
-        <tr>
+        <tr ng-show="hasRole('RESTAURANT')">
             <td><b>Стоимость</b></td><td>{{price}}</td><td><input class="form-control" type="number" ng-model="editedDish.price" id="price" name="price" placeholder="Стоимость" required/></td>
         </tr>
+        <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Стоимость</b></td><td>{{price}}</td><td>{{price}}</td></tr>
         <td align="left"><button class="btn btn-outline-danger btn-sm" style="width: 100%;" type="button" ng-click="updateDish()">Сохранить</button></td>
         <td><button class="btn btn-outline-warning btn-sm" style="width: 100%;" ng-click="undoChanges();isInitGroupValue()">Отменить</button></td></td>
         <td><button type="button" class="btn btn-outline-success btn-sm" style="width: 100%;" ng-click="showDishPage()">Вернуться на страницу блюда</button></td></td>
