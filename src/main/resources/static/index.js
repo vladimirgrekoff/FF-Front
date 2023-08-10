@@ -149,19 +149,32 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
 
 
 
-
+    //получить роли в хранилище
     $rootScope.getRole = function () {
         let jwt = $localStorage.findFoodUser.token;
         let data = JSON.parse(atob(jwt.split('.')[1]));
         $localStorage.findFoodUser.roles = data.roles;
     };
 
+    //проверка наличия роли у пользователя
+    $rootScope.hasRole = function(check) {
+        var roles = $localStorage.findFoodUser.roles;
+        if (roles != null) {
+            for (i=0; i<roles.length; i++){
+                if (check == roles[i]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+
     $scope.tryToLogout = function () {
         $location.path('welcome');
         $scope.clearUser();
         $localStorage.$reset();
     };
-
 
 
     $rootScope.logout = function() {
