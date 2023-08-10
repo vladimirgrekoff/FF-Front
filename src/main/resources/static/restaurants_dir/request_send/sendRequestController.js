@@ -20,7 +20,7 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
 
 
     $scope.loadMailBox = function () {
-            $http.get(contextPath + '/mail_box/' + $localStorage.guestMailBoxId)
+            $http.get(contextPath + '/mail_box/' + $localStorage.restMailBoxId)
                 .then(function (response) {
                 $scope.mailBox = response.data;
         });
@@ -28,14 +28,14 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
 
 
     $scope.deleteDishFromMailBox = function (dishId) {
-        $http.delete(contextPath + '/mail_box/' + $localStorage.guestMailBoxId + '/delete/' + dishId)
+        $http.delete(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/delete/' + dishId)
             .then(function (response) {
                 $scope.loadMailBox();
             });
     };
 
     $scope.clearMailBox = function () {
-        $http.delete(contextPath + '/mail_box/' + $localStorage.guestMailBoxId + '/clear')
+        $http.delete(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/clear')
             .then(function (response) {
                 $scope.loadMailBox();
             });
@@ -43,7 +43,7 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
 
 
     $scope.createRequestToNutritionist = function () {
-        $http.post(contextPath + '/requests', $localStorage.guestMailBoxId)
+        $http.post(contextPath + '/requests', $localStorage.restMailBoxId)
             .then(function (response) {
                 $scope.loadMailBox();
             });
