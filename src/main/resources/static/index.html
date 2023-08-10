@@ -76,6 +76,9 @@
                         <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('NUTRITIONIST')">
                             <a class="nav-link" href="#!/nutritionist_select" ng-click="">Проверка запросов</a>
                         </li>
+                        <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('NUTRITIONIST')">
+                            <a class="nav-link" href="#!/restaurant_requests" ng-click="">К запросам ресторана</a>
+                        </li>
                         <li class="nav-item" ng-show="isCurrentPageDishes() && (hasRole('RESTAURANT') || hasRole('NUTRITIONIST'))">
                             <a class="nav-link" href="" ng-click="showDeleteDishButton()">Удалить блюдо</a>
                             </span>

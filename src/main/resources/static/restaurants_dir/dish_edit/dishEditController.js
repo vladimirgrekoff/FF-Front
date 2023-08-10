@@ -28,17 +28,24 @@ angular.module('findFood').controller('dishEditController', function ($rootScope
     $scope.carbohydrates = $scope.beforeEditDish.carbohydrates;
     $scope.price = $scope.beforeEditDish.price;
 
-    $scope.isInitGroupValue = function(){
-        for(i=0; i<$scope.groupList.length; i++){
-            if($scope.groupList[i].title == $scope.beforeEditDish.group_dish_title){
-                return $scope.groupDishTitle = $scope.groupList[i].title;
+    if($rootScope.hasRole('RESTAURANT')){
+        $scope.isInitGroupValue = function(){
+            for(i=0; i<$scope.groupList.length; i++){
+                if($scope.groupList[i].title == $scope.beforeEditDish.group_dish_title){
+                    return $scope.groupDishTitle = $scope.groupList[i].title;
+                }
             }
-        }
-    };
+        };
+    }
 
     $scope.updateDish = function(){
         if ($scope.isEmptyDishData() == false){
-            $scope.editedDish.group_dish_title = $scope.groupDishTitle;
+
+            if($rootScope.hasRole('RESTAURANT')){
+                $scope.editedDish.group_dish_title = $scope.groupDishTitle;
+            } else {
+                $scope.editedDish.group_dish_title = $scope.group_dish_title;
+            }
             var editedDish = $scope.editedDish;
             if($scope.checkForChanges(editedDish)){
                 $http.put(contextPath, editedDish)
@@ -117,9 +124,11 @@ angular.module('findFood').controller('dishEditController', function ($rootScope
             alert("Поле 'Описание' должно быть заполнено!");
             return true;
         }
-        if($scope.groupDishTitle == undefined || $scope.groupDishTitle == ''){
-            alert("'Группа блюд' должна иметь одно из значений в списке 'Выбор группы'!");
-            return true;
+        if($rootScope.hasRole('RESTAURANT')){
+            if($scope.groupDishTitle == undefined || $scope.groupDishTitle == ''){
+                alert("'Группа блюд' должна иметь одно из значений в списке 'Выбор группы'!");
+                return true;
+            }
         }
         if($scope.editedDish.calories == undefined || $scope.editedDish.calories == null || $scope.editedDish.calories == ''){
             if(angular.isNumber($scope.editedDish.calories) == false){

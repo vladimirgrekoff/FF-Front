@@ -158,6 +158,9 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
 
     //проверка наличия роли у пользователя
     $rootScope.hasRole = function(check) {
+        if(!$localStorage.findFoodUser){
+            return false;
+        }
         var roles = $localStorage.findFoodUser.roles;
         if (roles != null) {
             for (i=0; i<roles.length; i++){
