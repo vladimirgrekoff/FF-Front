@@ -53,6 +53,11 @@
             controller:'newDishController',
             controllerAs:'dish_new'
         })
+        .when('/dish_verification', {
+            templateUrl:'restaurants_dir/dish_verification/dishVerificationTemplate.html',
+            controller:'dishVerificationController',
+            controllerAs:'dish_verification'
+        })
         .when('/request_create', {
             templateUrl:'restaurants_dir/request_create/createRequestTemplate.html',
             controller:'createRequestController',
@@ -67,11 +72,6 @@
             templateUrl:'restaurants_dir/restaurant_requests/restaurantRequestsTemplate.html',
             controller:'restaurantRequestsController',
             controllerAs:'restaurant_requests'
-        })
-        .when('/restaurant_verification', {
-            templateUrl:'restaurants_dir/restaurant_verification/dishVerificationTemplate.html',
-            controller:'dishVerificationController',
-            controllerAs:'restaurant_verification'
         })
         .when('/nutritionist', {
             templateUrl:'nutritionist_dir/nutritionist/nutritionistTemplate.html',
@@ -172,7 +172,7 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
         return false;
     };
 
-
+    //выход пользователя
     $scope.tryToLogout = function () {
         $location.path('welcome');
         $scope.clearUser();
@@ -180,10 +180,6 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
     };
 
 
-    $rootScope.logout = function() {
-        $localStorage.$reset();
-        $location.path('welcome');
-    };
 
     $scope.clearUser = function () {
         $http.defaults.headers.common.Authorization = '';
@@ -217,6 +213,15 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
     };
 
 
+    $rootScope.isCurrentPageDishes = function () {
+        if ($rootScope.currentPage == 'dishes') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+
     $rootScope.isCurrentPageDish = function () {
         if ($rootScope.currentPage == 'dish') {
             return true;
@@ -242,8 +247,8 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
     };
 
 
-    $rootScope.isCurrentPageDishes = function () {
-        if ($rootScope.currentPage == 'dishes') {
+    $rootScope.isCurrentPageDishVerification = function () {
+        if ($rootScope.currentPage == 'dish_verification') {
             return true;
         } else {
             return false;
@@ -307,15 +312,6 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
         }
     };
 
-
-
-    $rootScope.isCurrentPageDishVerification = function () {
-        if ($rootScope.currentPage == 'restaurant_verification') {
-            return true;
-        } else {
-            return false;
-        }
-    };
 
 
 });

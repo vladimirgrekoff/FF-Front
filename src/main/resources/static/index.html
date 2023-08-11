@@ -74,7 +74,7 @@
                             </span>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('NUTRITIONIST')">
-                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Проверка запросов</a>
+                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Другие рестораны</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('NUTRITIONIST')">
                             <a class="nav-link" href="#!/restaurant_requests" ng-click="">К запросам ресторана</a>
@@ -114,7 +114,7 @@
                         <!--       КОНЕЦ МЕНЮ     -->
 <!--                МЕНЮ СТРАНИЦЫ ПРОФИЛЯ РЕСТОРАНА-->
                         <li class="nav-item" ng-show="isCurrentPageRestaurantInfo()">
-                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageRestaurantInfo()">
                             <a class="nav-link" href="#!/restaurant_edit_info" ng-click="">Изменить данные профиля</a>
@@ -122,7 +122,7 @@
                         <!--       КОНЕЦ МЕНЮ     -->
 <!--                МЕНЮ СТРАНИЦЫ ПРАВКИ ПРОФИЛЯ РЕСТОРАНА-->
                         <li class="nav-item" ng-show="isCurrentPageRestaurantEditInfo()">
-                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageRestaurantEditInfo()">
                             <a class="nav-link" href="#!/restaurant_info">Профиль ресторана</a>
@@ -130,7 +130,7 @@
                         <!--       КОНЕЦ МЕНЮ     -->
 <!--                МЕНЮ СТРАНИЦЫ СОЗДАНИЯ ЗАПРОСА ДИЕТОЛОГУ-->
                         <li class="nav-item" ng-show="isCurrentPageCreateRequest()">
-                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageCreateRequest()">
                             <a class="nav-link" href="#!/request_send" ng-click="">Просмотр/отправка запроса</a>
@@ -138,7 +138,7 @@
                         <!--       КОНЕЦ МЕНЮ     -->
 <!--                МЕНЮ СТРАНИЦЫ ОТПРАВКИ ЗАПРОСА ДИЕТОЛОГУ-->
                         <li class="nav-item" ng-show="isCurrentPageSendRequest()">
-                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя "Страница ресторана"</a>
+                            <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageSendRequest()">
                             <a class="nav-link" href="#!/request_create" ng-click="">Вернуться к созданию запроса</a>
@@ -151,7 +151,7 @@
                         <!--       КОНЕЦ МЕНЮ     -->
 <!--                МЕНЮ СТРАНИЦЫ ВЫБОРА РЕСТОРАНА С ЗАПРОСАМИ-->
                         <li class="nav-item" ng-show="isCurrentPageNutritionistSelect()">
-                            <a class="nav-link" href="#!/nutritionist">Домашняя страница диетолога</a>
+                            <a class="nav-link" href="#!/nutritionist">Домашняя диетолога</a>
                         </li>
                         <!--       КОНЕЦ МЕНЮ     -->
 <!--                МЕНЮ СТРАНИЦЫ ЗАПРОСЫ РЕСТОРАНА ДИЕТОЛОГУ-->
@@ -159,7 +159,7 @@
                             <a class="nav-link" href="#!/nutritionist">Домашняя диетолога</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageRestaurantRequests()">
-                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Выбор ресторанов с запросами</a>
+                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Другие рестораны</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageRestaurantRequests()">
                             <a class="nav-link" href="#!/dishes" >Список блюд ресторпна</a>
@@ -167,7 +167,10 @@
                         <!--       КОНЕЦ МЕНЮ     -->
 <!--                МЕНЮ СТРАНИЦЫ ПРОВЕРКИ БЛЮДА ДИЕТОЛОГОМ-->
                         <li class="nav-item" ng-show="isCurrentPageDishVerification()">
-                            <a class="nav-link" href="#!/nutritionist">Домашняя страница диетолога</a>
+                            <a class="nav-link" href="#!/nutritionist">Домашняя диетолога</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageDishVerification()">
+                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Другие рестораны</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageDishVerification()">
                             <a class="nav-link" href="#!/restaurant_requests" ng-click="">Страница запросов ресторана</a>
@@ -214,10 +217,10 @@
 <script src="restaurants_dir/dish/dishController.js"></script>
 <script src="restaurants_dir/dish_edit/dishEditController.js"></script>
 <script src="restaurants_dir/dish_new/newDishController.js"></script>
+<script src="restaurants_dir/dish_verification/dishVerificationController.js"></script>
 <script src="restaurants_dir/request_create/createRequestController.js"></script>
 <script src="restaurants_dir/request_send/sendRequestController.js"></script>
 <script src="restaurants_dir/restaurant_requests/restaurantRequestsController.js"></script>
-<script src="restaurants_dir/restaurant_verification/dishVerificationController.js"></script>
 <script src="nutritionist_dir/nutritionist/nutritionistController.js"></script>
 <script src="nutritionist_dir/nutritionist_select/selectRestaurantController.js"></script>
 <script src="welcome/welcomeController.js"></script>

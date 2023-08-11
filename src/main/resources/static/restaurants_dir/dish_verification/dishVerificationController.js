@@ -4,7 +4,7 @@ angular.module('findFood').controller('dishVerificationController', function ($r
     const contextPath = 'http://localhost:5555/rest/api/v1';
 
     //включение дополнительных пунктов меню для страницы
-    $rootScope.currentPage = 'restaurant_verification';
+    $rootScope.currentPage = 'dish_verification';
 
     var restaurant;
 
