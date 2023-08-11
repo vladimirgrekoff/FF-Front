@@ -34,7 +34,7 @@ angular.module('findFood').controller("createRequestController", function($rootS
 
 
     $scope.loadMailBox = function () {
-            $http.get(contextPath + '/mail_box/' + $localStorage.guestMailBoxId)
+            $http.get(contextPath + '/mail_box/' + $localStorage.restMailBoxId)
                 .then(function (response) {
                 $scope.mailBox = response.data;
         });
@@ -46,7 +46,7 @@ angular.module('findFood').controller("createRequestController", function($rootS
             alert('Блюдо уже есть в списке!!!\nПопробуйте выбрать другое.');
             return;
         }
-        $http.get(contextPath + '/mail_box/' + $localStorage.guestMailBoxId + '/add/' +dishId)
+        $http.get(contextPath + '/mail_box/' + $localStorage.restMailBoxId + '/add/' +dishId)
             .then(function (response) {
                 dishId = null;
                 $scope.loadMailBox();

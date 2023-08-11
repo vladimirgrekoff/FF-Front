@@ -60,7 +60,7 @@ angular.module('findFood').controller('restaurantRequestsController', function (
         $localStorage.requestId = requestId;
         $localStorage.dishId = item.dishId;
         $localStorage.item = item;
-        $location.path('restaurant_verification');
+        $location.path('dish_verification');
     };
 
     $scope.loadRestaurantRequest();
