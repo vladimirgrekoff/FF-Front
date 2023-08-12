@@ -29,9 +29,9 @@
 
 <div class="container-fluid" ng-controller="indexController">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
+        <div class="container-fluid" ALIGN="center">
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav" align="center">
+                <ul class="navbar-nav" align="center" ng-show ="isCurrentPageWithNavBar()">
 <!--                МЕНЮ ДОМАШНЕЙ СТРАНИЦЫ-->
                     <li class="nav-item">
                         <a class="nav-link" href="#!/welcome">Find Food</a>
@@ -42,7 +42,6 @@
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
                         <a class="nav-link" href="#!/nutritionist">Страница диетолога</a>
                     </li>
-
 <!--                МЕНЮ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ НАЧАЛО-->
                     <ul class="navbar-nav" ng-show="isUserLoggedIn()">
 <!--                МЕНЮ СТРАНИЦЫ ВЫБОРА РЕСТОРАНОВ-->
@@ -195,10 +194,32 @@
                         </form>
                     </li>
                     <!--       КОНЕЦ ФОРМЫ     -->
+<!--                ВЫЗОВЫ МЕНЮ РЕГИСТРАЦИИ-->
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <p class="nav-link">Регистрация:</p>
+                    </li>
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <a class="nav-link" href="#!/user_registration" ng-click="">Пользователей</a>
+                    </li>
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <a class="nav-link" href="#!/restaurant_registration" ng-click="">Предприятий</a>
+                    </li>
+                    <!--       КОНЕЦ МЕНЮ     -->
 <!--                КНОПКА ВЫХОД АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ -->
                     <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
                     </li>
+                </ul>
+                <ul class="navbar-nav" align="center"  ng-show ="!isCurrentPageWithNavBar()">
+<!--                МЕНЮ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЕЙ-->
+                    <li class="nav-item" ng-show="isCurrentPageUserRegistration()">
+                        <a class="nav-link" href="#!/welcome" ng-click="">Вернуться на главную</a>
+                    </li>
+<!--                МЕНЮ РЕГИСТРАЦИИ РЕСТОРАНОВ-->
+                    <li class="nav-item" ng-show="isCurrentPageRestaurantRegistration()">
+                        <a class="nav-link" href="#!/welcome" ng-click="">Вернуться на главную</a>
+                    </li>
+                    <!--       КОНЕЦ МЕНЮ РЕГИСТРАЦИИ     -->
                 </ul>
             </div>
         </div>
@@ -223,6 +244,9 @@
 <script src="restaurants_dir/restaurant_requests/restaurantRequestsController.js"></script>
 <script src="nutritionist_dir/nutritionist/nutritionistController.js"></script>
 <script src="nutritionist_dir/nutritionist_select/selectRestaurantController.js"></script>
+<script src="registration_dir/restaurant_reg/restaurantRegController.js"></script>
+<script src="registration_dir/user_reg/userRegController.js"></script>
+
 <script src="welcome/welcomeController.js"></script>
 
 </div>

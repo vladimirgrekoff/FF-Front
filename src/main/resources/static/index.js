@@ -83,6 +83,16 @@
             controller:'selectRestaurantController',
             controllerAs:'nutritionist_select'
         })
+        .when('/user_registration', {
+            templateUrl:'registration_dir/user_reg/userRegTemplate.html',
+            controller:'userRegController',
+            controllerAs:'user_registration'
+        })
+        .when('/restaurant_registration', {
+            templateUrl:'registration_dir/restaurant_reg/restaurantRegTemplate.html',
+            controller:'restaurantRegController',
+            controllerAs:'restaurant_registration'
+        })
         .otherwise({
             redirectTo: '/welcome'
         });
@@ -312,6 +322,28 @@ angular.module('findFood').controller('indexController', function ($rootScope, $
         }
     };
 
+    $rootScope.isCurrentPageUserRegistration = function () {
+        if ($rootScope.currentPage == 'user_registration') {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
+    $rootScope.isCurrentPageRestaurantRegistration = function () {
+        if ($rootScope.currentPage == 'restaurant_registration') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $rootScope.isCurrentPageWithNavBar = function () {
+        if (($rootScope.currentPage != 'restaurant_registration') && ($rootScope.currentPage != 'user_registration')) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
 });
