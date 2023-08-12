@@ -12,7 +12,7 @@ angular.module('findFood').controller("userRegController", function($rootScope, 
     $rootScope.currentPage = 'user_registration';
 
     $scope.loginUser = function() {
-    console.log('name=' + $scope.user.username + ', ' + 'email=' + $scope.user.email + ', ' + 'firstname=' + $scope.user.firstname + ', ' + 'lastname=' + $scope.user.lastname + ', ' + 'password=' + $scope.user.password + ', ' + 'confirmPassword=' + $scope.user.confirmPassword);//////////
+    console.log('email=' + $scope.user.email + ', ' + 'firstname=' + $scope.user.firstname + ', ' + 'lastname=' + $scope.user.lastname + ', ' + 'password=' + $scope.user.password + ', ' + 'confirmPassword=' + $scope.user.confirmPassword);//////////
         $http.post(contextPath + '/registration', $scope.user)
             .then(function successCallback(response) {
                 if (response.data) {
