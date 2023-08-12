@@ -16,7 +16,6 @@ angular.module('findFood').controller("userRegController", function($rootScope, 
         $http.post(contextPath + '/registration', $scope.user)
             .then(function successCallback(response) {
                 if (response.data) {
-                    $scope.user.username = null;
                     $scope.user.email = null;
                     $scope.user.firstname = null;
                     $scope.user.lastname = null;
