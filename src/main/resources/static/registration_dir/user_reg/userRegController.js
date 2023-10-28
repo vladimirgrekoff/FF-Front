@@ -1,5 +1,5 @@
 angular.module('findFood').controller("userRegController", function($rootScope, $scope, $http, $location, $window, $localStorage) {
-//    const contextPath = 'http://localhost:8187/market-auth/api/v1';
+
     const contextPath = 'http://localhost:5555/auth/api/v1';
 
     $scope.$on('routeChangeStart', function(event, next, current) {
@@ -12,13 +12,18 @@ angular.module('findFood').controller("userRegController", function($rootScope, 
     $rootScope.currentPage = 'user_registration';
 
     $scope.loginUser = function() {
-    console.log('email=' + $scope.user.email + ', ' + 'firstname=' + $scope.user.firstname + ', ' + 'lastname=' + $scope.user.lastname + ', ' + 'password=' + $scope.user.password + ', ' + 'confirmPassword=' + $scope.user.confirmPassword);//////////
-        $http.post(contextPath + '/registration', $scope.user)
+        $http.post(contextPath + '/register/user', $scope.user)
             .then(function successCallback(response) {
                 if (response.data) {
+                 if(response.data.message != null){
+                    alert(response.data.message + "\nСейчас вы будете переведены на главную страницу" +
+                                                  "\nи сможете ввести свои email и пароль для входа" +
+                                                  "\nна свою страниицу." +
+                                                  "\nНа ней Вы сможете заполнить Анкету для использования" +
+                                                  "\nсервиса");
+                 }
                     $scope.user.email = null;
-                    $scope.user.firstname = null;
-                    $scope.user.lastname = null;
+                    $scope.user.name = null;
                     $scope.user.password = null;
                     $scope.user.confirmPassword = null;
                     $location.path('/welcome');
@@ -27,5 +32,6 @@ angular.module('findFood').controller("userRegController", function($rootScope, 
                 $scope.error = response.data;
             });
     };
+
 
 });

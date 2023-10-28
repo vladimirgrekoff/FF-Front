@@ -1,0 +1,60 @@
+<div ng-controller="clientInfoController">
+    <p>&nbsp;</p>
+
+    <div class="container" align="center">
+        <h4 align="center">Профиль пользователя {{currentClientName}}</h4>
+<!--        <p>&nbsp;</p>-->
+        <p>Изменить данные регистрации: &nbsp;<button class="btn btn-outline-danger btn-sm" style="width: 10%;" ng-click="showConfirmationInfoPage()">Изменить</button></p>
+        <!--        <p>&nbsp;</p>-->
+        <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center" ng-model="currentClient">
+            <thead>
+            <tr>
+                <td width="40%"><b>Поля профиля</b></td><td width="40%"><b>Значение</b></td>
+            </tr>
+            </thead>
+            <tr>
+                <td width="40%">Имя</td><td width="40%">{{currentClient.info_dto.firstname}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Отчество</td><td width="40%">{{currentClient.info_dto.surname}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Фамилия</td><td width="40%">{{currentClient.info_dto.lastname}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Почтовый индекс</td><td width="40%">{{currentClient.info_dto.index}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Город</td><td width="40%">{{currentClient.info_dto.city}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Улица</td><td width="40%">{{currentClient.info_dto.street}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Дом</td><td width="40%">{{currentClient.info_dto.house}}</td>
+            </tr>
+            <tr ng-show="hasRole('ADMIN') || hasRole('NUTRITIONIST')">
+                <td width="40%">Офис</td><td width="40%">{{currentClient.info_dto.apartment}}</td>
+            </tr>
+            <tr ng-show="!hasRole('ADMIN') && !hasRole('NUTRITIONIST')">
+                <td width="40%">Квартира</td><td width="40%">{{currentClient.info_dto.apartment}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Номер телефона</td><td width="40%">{{currentClient.info_dto.phoneNumber}}</td>
+            </tr>
+            <tr>
+                <td width="40%">E-mail</td><td width="40%">{{currentClient.info_dto.email}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Имя в Telegram</td><td width="40%">{{currentClient.info_dto.telegramName}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Добавлено в список</td><td width="40%">{{currentClient.info_dto.createdAt}}</td>
+            </tr>
+            <tr>
+                <td width="40%">Изменено</td><td width="40%">{{currentClient.info_dto.updatedAt}}</td>
+            </tr>
+            <tbody>
+        </table>
+    </div>
+</div>

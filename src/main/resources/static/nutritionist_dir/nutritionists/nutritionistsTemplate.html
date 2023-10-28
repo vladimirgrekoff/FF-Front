@@ -1,0 +1,61 @@
+<div class="container" ng-controller="nutritionistsController">
+
+    <table class="table" cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr><td width="10%" colspan="2">показать всех</td><td width="30%" colspan="3">поиск по фамилии (без учета регистра)</td><td width="30%" colspan="3">поиск по email</td></tr>
+        <tr>
+            <td width="10%">
+                <button class="btn btn-outline-success" style="width: 100%;" type="button" ng-click="loadEmployees()">Показать</button>
+            </td>
+            <td width="5%"><p>&nbsp;</p></td>
+            <form novalidate ng-submit="getEmployeesInfoList()">
+                <td width="25%">
+                    <input type="text" class="form-control" id="part_lastname" name="part_lastname" placeholder="Полная или часть фамилии" ng-model="part_lastname">
+                </td>
+                <td width="10%">
+                    <button class="btn btn-outline-primary" style="width: 100%;" type="button" ng-click="getEmployeesInfoList(null)">Найти</button>
+                </td>
+            </form>
+            <td width="5%"><p>&nbsp;</p></td>
+            <form novalidate ng-submit="getEmployeesInfoList()">
+                <td width="25%">
+                    <input type="text" class="form-control" id="part_email" name="part_email" placeholder="Полностью или часть email" ng-model="part_email">
+                </td>
+                <td width="10%">
+                    <button class="btn btn-outline-primary" style="width: 100%;" type="button" ng-click="getEmployeesInfoList()">Найти</button>
+                </td>
+            </form>
+        </tr>
+    </table>
+    <p></p>
+    <p>&nbsp;</p>
+    <h2 align="center">Диетологи на сайте</h2>
+    <p></p>
+
+    <table class="table table-striped" width="80%" align="center">
+        <thead>
+        <tr>
+            <td width="5%"><b>ID</b></td>
+            <td width="15%"><b>email</b></td>
+            <td width="15%"><b>Фамилия</b></td>
+            <td width="10%"><b>Город</b></td>
+            <td width="20%"><b>Адрес</b></td>
+            <td width="15%"><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="e in EmployeesInfoList">
+            <td>{{e.id}}</td>
+            <td>{{e.info_dto.email}}</td>
+            <td>{{e.info_dto.lastname}}</td>
+            <td>{{e.info_dto.city}}</td>
+            <td>{{e.info_dto.street}}, № {{e.info_dto.house}}</td>
+
+            <td>
+                <button class="btn btn-primary" ng-click="showNutritionistPage(e)">Страница диетолога</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+</div>

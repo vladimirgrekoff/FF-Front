@@ -50,6 +50,9 @@ angular.module('findFood').controller("sendRequestController", function($rootSco
         $http.post(contextPath + '/requests', $scope.valueRequest)
             .then(function (response) {
                 $scope.loadMailBox();
+            }, function errorCallback(response) {
+                $rootScope.showAlertWindow(response);
+                $location.path('request_create');
             });
     };
 

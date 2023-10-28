@@ -14,7 +14,7 @@ angular.module('findFood').controller('restaurantController', function ($rootSco
     $rootScope.currentPage = 'restaurant';
 
 
-    if(!$localStorage.findFoodUser){ //для не авторизованного пользователя (общая информация)
+    if(!$localStorage.findFoodUser || $rootScope.hasRole('ADMIN') || ($rootScope.hasRole('CLIENT')  && !$rootScope.hasRole('NUTRITIONIST'))){ //для админа (с меню) и не авторизованного пользователя (общая информация)
         let restaurant = $localStorage.currentRestaurant;
         $scope.currentRestaurant = $localStorage.currentRestaurant;
         $scope.currentRestaurantTitle = $localStorage.currentRestaurant.title;
@@ -29,8 +29,7 @@ angular.module('findFood').controller('restaurantController', function ($rootSco
         };
         $scope.loadRestaurantInfo();
 
-    } else if($localStorage.findFoodUser){  //для работы ресторанов
-
+    } else if($localStorage.findFoodUser && !$rootScope.hasRole('CLIENT') && !$rootScope.hasRole('ADMIN')){  //для работы ресторанов
         $scope.email = $localStorage.findFoodUser.email;
 
 
@@ -39,6 +38,7 @@ angular.module('findFood').controller('restaurantController', function ($rootSco
             $http.get(contextPath + '/groups_of_dishes/all')
                 .then(function (response) {
                     $localStorage.groupDishList = response.data;
+                    $scope.groupDishList = $localStorage.groupDishList;
                     return $scope.groupDishList;
                 });
         };
@@ -48,6 +48,7 @@ angular.module('findFood').controller('restaurantController', function ($rootSco
             $http.get(contextPath + '/categories/all')
                 .then(function (response) {
                     $localStorage.categoriesDishList = response.data;
+                    $scope.categoriesDishList = $localStorage.categoriesDishList;
                     return $scope.categoriesDishList;
                 });
         };

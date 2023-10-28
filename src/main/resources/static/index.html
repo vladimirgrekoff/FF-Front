@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+
 <html ng-app="findFood">
 <head>
     <meta charset="utf-8">
@@ -40,64 +40,121 @@
                         <a class="nav-link" href="#!/restaurants">Список ресторанов</a>
                     </li>
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
-                        <a class="nav-link" href="#!/nutritionist">Страница диетолога</a>
+                        <a class="nav-link" href="#!/nutritionists">Диетологи</a>
+                    </li>
+                    <li class="nav-item" ng-show="!isUserLoggedIn()">
+                        <a class="nav-link" href="#!/help">Справка</a>
                     </li>
 <!--                МЕНЮ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ НАЧАЛО-->
                     <ul class="navbar-nav" ng-show="isUserLoggedIn()">
+                        <li class="nav-item" ng-show="isCurrentPageWelcome()">
+                            <a class="nav-link" ng-click="defineDestination()" href="">Домашняя страница</a>
+                        </li>
+
+<!--                МЕНЮ СТРАНИЦЫ СПРАВКИ-->
+                        <li class="nav-item" ng-show="isCurrentPageHelp()">
+                            <a class="nav-link" ng-click="defineDestination()" href="">Домашняя страница</a>
+                        </li>
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ВЫБОРА РЕСТОРАНОВ-->
-                        <li class="nav-item" ng-show="isCurrentPageRestaurants()">
+                        <!-- АДМИНИСТРАТОР-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants() && hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/admin">Домашняя администратора</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants() && hasRole('ADMIN')">
                             <a class="nav-link" href="" ng-click="showAddRestaurantForm()">Добавить ресторан</a>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageRestaurants()">
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants() && hasRole('ADMIN')">
                             <a class="nav-link" href="" ng-click="showDeleteRestaurantButton()">Удалить ресторан</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!-- ПОЛЬЗОВАТЕЛЬ-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants() && !hasRole('RESTAURANT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants() && !hasRole('RESTAURANT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client_questionnaire">Анкета</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurants() && !hasRole('RESTAURANT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client_info">Профиль</a>
+                        </li>
+                        <!--       конец меню     -->
 <!--                МЕНЮ ДОМАШНЕЙ СТРАНИЦЫ РЕСТОРАНА-->
+                        <!-- АДМИНИСТРАТОР-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/admin">Домашняя администратора</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/restaurants" ng-click="">Другие рестораны</a>
+                        </li>
+                        <!-- ПОЛЬЗОВАТЕЛЬ-->
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && !hasRole('RESTAURANT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && !hasRole('RESTAURANT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/restaurants" ng-click="">Другие рестораны</a>
+                        </li>
+
                         <li class="nav-item" ng-show="isCurrentPageRestaurant()">
                             <a class="nav-link" href="#!/dishes" >Список блюд</a>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageRestaurant()">
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && hasRole('RESTAURANT') && !hasRole('ADMIN')">
+<!--                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && !hasRole('CLIENT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">-->
                             <a class="nav-link" href="#!/restaurant_info">Профиль ресторана</a>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageRestaurant()">
+                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && hasRole('RESTAURANT') && !hasRole('ADMIN')">
+<!--                        <li class="nav-item" ng-show="isCurrentPageRestaurant() && !hasRole('CLIENT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">-->
                             <a class="nav-link" href="#!/request_create">Запрос диетологу</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+
+
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ СПИСКА БЛЮД-->
                         <li class="nav-item" ng-show="isCurrentPageDishes()">
-                            <span ng-show="hasRole('RESTAURANT')">
+                            <span ng-show="hasRole('RESTAURANT') && !hasRole('ADMIN')">
                                 <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
                             </span>
-                            <span ng-show="hasRole('NUTRITIONIST')">
+                            <span ng-show="hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
                                 <a class="nav-link" href="#!/nutritionist" ng-click="">Домашняя диетолога</a>
                             </span>
+                            <span ng-show="!hasRole('RESTAURANT') && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                                <a class="nav-link" href="#!/client" ng-click="">Домашняя</a>
+                            </span>
+                            <span ng-show="hasRole('ADMIN')">
+                                <a class="nav-link" href="#!/admin" ng-click="">Домашняя администратора</a>
+                            </span>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('NUTRITIONIST')">
-                            <a class="nav-link" href="#!/nutritionist_select" ng-click="">Другие рестораны</a>
+                        <li class="nav-item" ng-show="isCurrentPageDishes()">
+                            <span ng-show="hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                                <a class="nav-link" href="#!/nutritionist_select" ng-click="">Другие рестораны</a>
+                            </span>
+                            <span ng-show="hasRole('ADMIN')">
+                                <a class="nav-link" href="#!/restaurants" ng-click="">Другие рестораны</a>
+                            </span>
+                            <span ng-show="!hasRole('RESTAURANT') && !hasRole('NUTRITIONIST')">
+                                <a class="nav-link" href="#!/restaurants" ng-click="">Другие рестораны</a>
+                            </span>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('NUTRITIONIST')">
+                        <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
                             <a class="nav-link" href="#!/restaurant_requests" ng-click="">К запросам ресторана</a>
                         </li>
                         <li class="nav-item" ng-show="isCurrentPageDishes() && (hasRole('RESTAURANT') || hasRole('NUTRITIONIST'))">
                             <a class="nav-link" href="" ng-click="showDeleteDishButton()">Удалить блюдо</a>
-                            </span>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageDishes() && (hasRole('RESTAURANT') || hasRole('NUTRITIONIST'))">
+                        <li class="nav-item" ng-show="isCurrentPageDishes() && (hasRole('RESTAURANT') || hasRole('NUTRITIONIST')) && !hasRole('ADMIN')">
                             <a class="nav-link" href="" ng-click="showEditDishButton()">Изменить блюдо</a>
-                            </span>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('RESTAURANT')">
+                        <li class="nav-item" ng-show="isCurrentPageDishes() && hasRole('RESTAURANT') && !hasRole('ADMIN')">
                             <a class="nav-link" href="#!/dish_new" ng-click="showAddNewDishForm()">Добавить блюдо</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ИНФОРМАЦИИ БЛЮДА-->
-                        <li class="nav-item" ng-show="isCurrentPageDish()">
+                        <li class="nav-item" ng-show="isCurrentPageDish() && !isFromPage('menu')">
                             <a class="nav-link" href="#!/dishes">Вернуться к "Списку блюд"</a>
                         </li>
-                        <li class="nav-item" ng-show="isCurrentPageDish()">
+                        <li class="nav-item" ng-show="isCurrentPageDish() && (hasRole('RESTAURANT') || hasRole('NUTRITIONIST')) && !hasRole('ADMIN')">
                             <a class="nav-link" href="#!/dish_edit">Изменить блюдо</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ПРАВКИ БЛЮДА-->
                         <li class="nav-item" ng-show="isCurrentPageEditDish()">
                             <a class="nav-link" href="#!/dishes">Вернуться к "Списку блюд"</a>
@@ -105,12 +162,12 @@
                         <li class="nav-item" ng-show="isCurrentPageEditDish()">
                             <a class="nav-link" href="#!/dish">На страницу блюда</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ДОБАВИТЬ БЛЮДО-->
                         <li class="nav-item" ng-show="isCurrentPageAddNewDish()">
                             <a class="nav-link" href="#!/dishes">Вернуться к "Списку блюд"</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ПРОФИЛЯ РЕСТОРАНА-->
                         <li class="nav-item" ng-show="isCurrentPageRestaurantInfo()">
                             <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
@@ -118,7 +175,7 @@
                         <li class="nav-item" ng-show="isCurrentPageRestaurantInfo()">
                             <a class="nav-link" href="#!/restaurant_edit_info" ng-click="">Изменить данные профиля</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ПРАВКИ ПРОФИЛЯ РЕСТОРАНА-->
                         <li class="nav-item" ng-show="isCurrentPageRestaurantEditInfo()">
                             <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
@@ -126,7 +183,7 @@
                         <li class="nav-item" ng-show="isCurrentPageRestaurantEditInfo()">
                             <a class="nav-link" href="#!/restaurant_info">Профиль ресторана</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ СОЗДАНИЯ ЗАПРОСА ДИЕТОЛОГУ-->
                         <li class="nav-item" ng-show="isCurrentPageCreateRequest()">
                             <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
@@ -134,7 +191,7 @@
                         <li class="nav-item" ng-show="isCurrentPageCreateRequest()">
                             <a class="nav-link" href="#!/request_send" ng-click="">Просмотр/отправка запроса</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ОТПРАВКИ ЗАПРОСА ДИЕТОЛОГУ-->
                         <li class="nav-item" ng-show="isCurrentPageSendRequest()">
                             <a class="nav-link" href="#!/restaurant" ng-click="">Домашняя ресторана</a>
@@ -142,17 +199,55 @@
                         <li class="nav-item" ng-show="isCurrentPageSendRequest()">
                             <a class="nav-link" href="#!/request_create" ng-click="">Вернуться к созданию запроса</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
+<!--                КОНЕЦ СТРАНИЦ РЕСТОРАНОВ-->
+<!--                МЕНЮ СТРАНИЦЫ СПИСКА ДИЕТОЛОГОВ-->
+                        <li class="nav-item" ng-show="isCurrentPageNutritionists()">
+                            <a class="nav-link" href="#!/restaurants">Список ресторанов</a>
+                        </li>
+                        <!--       конец меню     -->
 <!--                МЕНЮ ДОМАШНЕЙ СТРАНИЦЫ ДИЕТОЛОГА-->
                         <li class="nav-item" ng-show="isCurrentPageNutritionist()">
                             <a class="nav-link" href="#!/nutritionist_select" ng-click="">Проверка пришедших запросов</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <li class="nav-item" ng-show="isCurrentPageNutritionist()">
+                            <a class="nav-link" href="#!/client_info">Профиль</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageNutritionist()">
+                            <a class="nav-link" href="#!/client_questionnaire">Анкета</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageNutritionist()">
+                            <a class="nav-link" href="#!/menu">ПОДБОР МЕНЮ</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageNutritionist()">
+                            <a class="nav-link" href="#!/help">Справка</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРОФИЛЯ ДИЕТОЛОГА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientProfile() && hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/nutritionist">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ АНКЕТЫ ДИЕТОЛОГА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientQuestion() && hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/nutritionist">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ ПРОФИЛЯ ДИЕТОЛОГА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientEditProfile() && hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/nutritionist">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ АНКЕТЫ ДИЕТОЛОГА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientEditQuestion() && hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/nutritionist">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ВЫБОРА РЕСТОРАНА С ЗАПРОСАМИ-->
                         <li class="nav-item" ng-show="isCurrentPageNutritionistSelect()">
                             <a class="nav-link" href="#!/nutritionist">Домашняя диетолога</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ЗАПРОСЫ РЕСТОРАНА ДИЕТОЛОГУ-->
                         <li class="nav-item" ng-show="isCurrentPageRestaurantRequests()">
                             <a class="nav-link" href="#!/nutritionist">Домашняя диетолога</a>
@@ -163,7 +258,7 @@
                         <li class="nav-item" ng-show="isCurrentPageRestaurantRequests()">
                             <a class="nav-link" href="#!/dishes" >Список блюд ресторпна</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
 <!--                МЕНЮ СТРАНИЦЫ ПРОВЕРКИ БЛЮДА ДИЕТОЛОГОМ-->
                         <li class="nav-item" ng-show="isCurrentPageDishVerification()">
                             <a class="nav-link" href="#!/nutritionist">Домашняя диетолога</a>
@@ -174,7 +269,166 @@
                         <li class="nav-item" ng-show="isCurrentPageDishVerification()">
                             <a class="nav-link" href="#!/restaurant_requests" ng-click="">Страница запросов ресторана</a>
                         </li>
-                        <!--       КОНЕЦ МЕНЮ     -->
+                        <!--       конец меню     -->
+<!--                КОНЕЦ СТРАНИЦ ДИЕТОЛОГА-->
+<!--                СТРАНИЦЫ АДМИНИСТРАТОРА-->
+<!--                МЕНЮ СТРАНИЦЫ ПРОФИЛЯ АДМИНИСТРАТОРА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientProfile() && hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/admin">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ ПРОФИЛЯ АДМИНИСТРАТОРА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientEditProfile() && hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/admin">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ АНКЕТЫ АДМИНИСТРАТОРА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientQuestion() && hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/admin">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ АНКЕТЫ АДМИНИСТРАТОРА-->
+                        <li class="nav-item" ng-show="isCurrentPageClientEditQuestion() && hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/admin">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ АДМИНИСТРАТОРА СО СПИСКОМ ПОЛЬЗОВАТЕЛЕЙ-->
+                        <li class="nav-item" ng-show="isCurrentPageClients()">
+                            <a class="nav-link" href="#!/admin">Домашняя администратора</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClients()">
+                            <a class="nav-link" href="#!/employees">Список сотрудников</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClients() && hasRole('ADMIN')">
+                            <a class="nav-link" href="" ng-click="showAddPersonForm()">Добавить пользователя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ АДМИНИСТРАТОРА СО СПИСКОМ СОТРУДНИКОВ-->
+                        <li class="nav-item" ng-show="isCurrentPageEmployees()">
+                            <a class="nav-link" href="#!/admin">Домашняя администратора</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageEmployees()">
+                            <a class="nav-link" href="#!/clients">Список пользователей</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКА РОЛЕЙ АДМИНИСТРАТОРОМ-->
+                        <li class="nav-item" ng-show="isCurrentPageEditRoles()">
+                            <a class="nav-link" href="#!/admin">Домашняя администратора</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageEditRoles()">
+                            <a class="nav-link" href="#!/clients">Список пользователей</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageEditRoles()">
+                            <a class="nav-link" href="#!/employees">Список сотрудников</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                КОНЕЦ СТРАНИЦ АДМИНИСТРАТОРА-->
+<!--                СТРАНИЦЫ ПОЛЬЗОВАТЕЛЯ-->
+<!--                МЕНЮ ДОМАШНЕЙ СТРАНИЦЫ ПОЛЬЗОВАТЕЛЯ-->
+                        <li class="nav-item" ng-show="isCurrentPageClient()">
+                            <a class="nav-link" href="#!/restaurants">Список ресторанов</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClient()">
+                            <a class="nav-link" href="#!/client_info">Профиль</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClient()">
+                            <a class="nav-link" href="#!/client_questionnaire">Анкета</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClient()">
+                            <a class="nav-link" href="#!/menu">ПОДБОР МЕНЮ</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClient()">
+                            <a class="nav-link" href="#!/help">Справка</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПОДБОРА БЛЮД НА ДЕНЬ-->
+                        <li class="nav-item" ng-show="isCurrentPageMenu()">
+<!--                            <a class="nav-link" href="#!/client">Домашняя</a>-->
+                            <a class="nav-link" href="" ng-click="defineDestination()">Домашняя</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРОСМОТРА ОПИСАНИЯ БЛЮДА ИЗ МЕНЮ НА ДЕНЬ-->
+                        <li class="nav-item" ng-show="isCurrentPageDish() && isFromPage('menu')">
+                            <a class="nav-link" href="" ng-click="showMenuPage()">Просмотр меню</a>
+                        </li>
+<!--                МЕНЮ СТРАНИЦЫ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ-->
+                        <li class="nav-item" ng-show="isCurrentPageClientProfile() && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientProfile()">
+                            <a class="nav-link" href="#!/client_questionnaire">Анкета</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientProfile()">
+                            <a class="nav-link" href="#!/client_info_edit">Правка профиля</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ АНКЕТЫ ПОЛЬЗОВАТЕЛЯ-->
+                        <li class="nav-item" ng-show="isCurrentPageClientQuestion() && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientQuestion()">
+                            <a class="nav-link" href="#!/client_info">Профиль</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientQuestion()">
+                            <a class="nav-link" href="#!/client_questionnaire_edit">Правка анкеты</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ-->
+                        <li class="nav-item" ng-show="isCurrentPageClientEditProfile() && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientEditProfile()">
+                            <a class="nav-link" href="#!/client_questionnaire">Анкета</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientEditProfile()">
+                            <a class="nav-link" href="#!/client_info">Назад в Профиль</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПРАВКИ АНКЕТЫ ПОЛЬЗОВАТЕЛЯ-->
+                        <li class="nav-item" ng-show="isCurrentPageClientEditQuestion() && !hasRole('NUTRITIONIST') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/client">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientEditQuestion()">
+                            <a class="nav-link" href="#!/client_info">Профиль</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageClientEditQuestion()">
+                            <a class="nav-link" href="#!/client_questionnaire">Просмотр Анкеты</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ПОДТВЕРЖДЕНИЯ РЕГИСТРАЦИОННЫХ ДАННЫХ-->
+                        <li class="nav-item" ng-show="isCurrentPageConfirmation()">
+                            <a class="nav-link" ng-click="defineDestination()" href="">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageConfirmation() && hasRole('RESTAURANT') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/restaurant_info">Назад в Профиль</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageConfirmation() && hasRole('CLIENT')">
+                            <a class="nav-link" href="#!/client_info">Назад в Профиль</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ИЗМЕНЕНИЯ ПАРОЛЯ-->
+                        <li class="nav-item" ng-show="isCurrentPageChangePassword()">
+                            <a class="nav-link" ng-click="defineDestination()" href="">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageChangePassword() && hasRole('RESTAURANT') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/restaurant_info">Назад в Профиль</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageChangePassword() && hasRole('CLIENT')">
+                            <a class="nav-link" href="#!/client_info">Назад в Профиль</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                МЕНЮ СТРАНИЦЫ ИЗМЕНЕНИЯ EMAIL-->
+                        <li class="nav-item" ng-show="isCurrentPageChangeEmail()">
+                            <a class="nav-link" ng-click="defineDestination()" href="">Домашняя</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageChangeEmail() && hasRole('RESTAURANT') && !hasRole('ADMIN')">
+                            <a class="nav-link" href="#!/restaurant_info">Назад в Профиль</a>
+                        </li>
+                        <li class="nav-item" ng-show="isCurrentPageChangeEmail() && hasRole('CLIENT')">
+                            <a class="nav-link" href="#!/client_info">Назад в Профиль</a>
+                        </li>
+                        <!--       конец меню     -->
+<!--                КОНЕЦ СТРАНИЦ ПОЛЬЗОВАТЕЛЯ-->
                     </ul>
 <!--                МЕНЮ АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ КОНЕЦ-->
 <!--                ФОРМА АВТОРИЗАЦИИ ПОЛЬЗОВАТЕЛЕЙ-->
@@ -204,7 +458,7 @@
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
                         <a class="nav-link" href="#!/restaurant_registration" ng-click="">Предприятий</a>
                     </li>
-                    <!--       КОНЕЦ МЕНЮ     -->
+                    <!--       конец меню     -->
 <!--                КНОПКА ВЫХОД АВТОРИЗОВАННЫХ ПОЛЬЗОВАТЕЛЕЙ -->
                     <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
@@ -219,7 +473,7 @@
                     <li class="nav-item" ng-show="isCurrentPageRestaurantRegistration()">
                         <a class="nav-link" href="#!/welcome" ng-click="">Вернуться на главную</a>
                     </li>
-                    <!--       КОНЕЦ МЕНЮ РЕГИСТРАЦИИ     -->
+                    <!--       конец меню РЕГИСТРАЦИИ     -->
                 </ul>
             </div>
         </div>
@@ -230,6 +484,15 @@
 
 
 <script src="index.js"></script>
+<script src="users_dir/user/clientController.js"></script>
+<script src="users_dir/users/clientsController.js"></script>
+<script src="users_dir/user_info/clientInfoController.js"></script>
+<script src="users_dir/user_info_edit/clientInfoEditController.js"></script>
+<script src="users_dir/user_questionnaire/clientQuestionController.js"></script>
+<script src="users_dir/user_questionnaire_edit/clientQuestionEditController.js"></script>
+<script src="admin_dir/admin/adminController.js"></script>
+<script src="admin_dir/roles_edit/rolesController.js"></script>
+<script src="admin_dir/employees/employeesController.js"></script>
 <script src="restaurants_dir/restaurants/restaurantsController.js"></script>
 <script src="restaurants_dir/restaurant/restaurantController.js"></script>
 <script src="restaurants_dir/restaurant_info/restaurantInfoController.js"></script>
@@ -240,12 +503,21 @@
 <script src="restaurants_dir/dish_new/newDishController.js"></script>
 <script src="restaurants_dir/dish_verification/dishVerificationController.js"></script>
 <script src="restaurants_dir/request_create/createRequestController.js"></script>
+<script src="nutritionist_dir/nutritionists/nutritionistsController.js"></script>
 <script src="restaurants_dir/request_send/sendRequestController.js"></script>
 <script src="restaurants_dir/restaurant_requests/restaurantRequestsController.js"></script>
 <script src="nutritionist_dir/nutritionist/nutritionistController.js"></script>
 <script src="nutritionist_dir/nutritionist_select/selectRestaurantController.js"></script>
 <script src="registration_dir/restaurant_reg/restaurantRegController.js"></script>
 <script src="registration_dir/user_reg/userRegController.js"></script>
+<script src="registration_dir/confirmation/confirmationController.js"></script>
+<script src="registration_dir/password_change/changePasswordController.js"></script>
+<script src="registration_dir/email_change/changeEmailController.js"></script>
+<script src="help_dir/reg_data/change_registrationHelpController.js"></script>
+<script src="help_dir/user_name/change_usernameHelpController.js"></script>
+<script src="help_dir/questionnaire/filling_questionnaireHelpController.js"></script>
+<script src="help_dir/indexHelpController.js"></script>
+<script src="menu_dir/menuController.js"></script>
 
 <script src="welcome/welcomeController.js"></script>
 

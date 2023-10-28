@@ -1,0 +1,66 @@
+<div ng-controller="clientQuestionEditController">
+    <p>&nbsp;</p>
+
+    <div class="container" align="center">
+        <h4 align="center">Правка анкеты пользователя {{currentClientName}}</h4>
+        <p>&nbsp;</p>
+        <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center" ng-model="currentClient">
+            <thead>
+            <tr>
+                <td width="30%"><b>Поля анкеты</b></td><td width="30%"><b>Текущее значение</b></td><td width="30%"><b>Новое значение</b></td>
+            </tr>
+            </thead>
+            <tr>
+                <td>Имя в сети (nick)</td><td>{{username}}</td><td><input class="form-control" type="text" ng-model="editedClient.username" id="username" name="username" placeholder="Имя в сети (nick) (учет регистра)" required/></td>
+            </tr>
+            <tr>
+                <td>Пол</td><td>{{sex}}</td>
+                <td>
+                    <form name="sexSelect" novalidate>
+                        <select class="form-select" id="sexTitle" name="sexTitle" ng-model="sexTitle" ng-init="selected=isInitSexValue()" required>
+                            <option value="">Выбор пола&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            <option ng-repeat="sex in sexList" value="{{sex}}">{{sex}}</option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Дата рождения</td><td>{{birthdate}}</td><td><input class="form-control" type="text" ng-model="editedClient.birthdate" id="birthdate" name="birthdate" placeholder="Дата (год-месяц-число)" required/></td>
+            </tr>
+            <tr>
+                <td>Вес в килограммах</td><td>{{weight}}</td><td><input class="form-control" type="number" ng-model="editedClient.weight" id="weight" name="weight" placeholder="Вес в кг" required/></td>
+            </tr>
+            <tr>
+                <td>Рост</td><td>{{height}}</td><td><input class="form-control" type="number" ng-model="editedClient.height" id="height" name="height" placeholder="Рост" required/></td>
+            </tr>
+            <tr>
+                <td>Уровень физической нагрузки</td><td>{{activity_title}}</td>
+                <td>
+                    <form name="activitySelect" novalidate>
+                        <select class="form-select" id="activityTitle" name="activityTitle" ng-model="activityTitle" ng-init="selected=isInitActivityValue()" required>
+                            <option value="">Выбор нагрузки&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            <option ng-repeat="activity in activityList" value="{{activity}}">{{activity}}</option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Цель (желаемый вес)</td><td>{{goal_title}}</td>
+                <td>
+                    <form name="goalSelect" novalidate>
+                        <select class="form-select" id="goalTitle" name="goalTitle" ng-model="goalTitle" ng-init="selected=isInitGoalValue()" required>
+                            <option value="">Желаемый вес&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                            <option ng-repeat="goal in goalList" value="{{goal}}">{{goal}}</option>
+                        </select>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td align="left"><button class="btn btn-outline-danger btn-sm" style="width: 100%;" type="button" ng-click="updateClientQuestionnaire()">Сохранить</button></td>
+                <td><button class="btn btn-outline-warning btn-sm" style="width: 100%;" ng-click="undoChanges();isInitSexValue();isInitActivityValue();isInitGoalValue()">Отменить</button></td>
+                <td><button type="button" class="btn btn-outline-success btn-sm" style="width: 100%;" ng-click="showQuestionnairePage()">Вернуться на страницу анкеты</button></td>
+            </tr>
+            <tbody>
+        </table>
+    </div>
+</div>

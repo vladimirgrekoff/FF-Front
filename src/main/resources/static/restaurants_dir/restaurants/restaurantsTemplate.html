@@ -1,4 +1,22 @@
 <div class="container" ng-controller="restaurantsController">
+
+    <table class="table" cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr><td width="10%" colspan="2">показать все</td><td width="30%" colspan="2">поиск по названию</td></tr>
+        <tr>
+            <td width="10%">
+                <button class="btn btn-outline-success" style="width: 100%;" type="button" ng-click="loadAllRestaurants()">Показать</button>
+            </td>
+            <td width="10%"><p>&nbsp;</p></td>
+            <form novalidate ng-submit="loadAllRestaurants()">
+                <td width="30%">
+                    <input type="text" class="form-control" id="part_title" name="part_title" placeholder="Полностью или часть названия (без учета регистра)" ng-model="part_title">
+                </td>
+                <td width="10%">
+                    <button class="btn btn-outline-primary" style="width: 100%;" type="button" ng-click="loadAllRestaurants()">Найти</button>
+                </td>
+            </form>
+        </tr>
+    </table>
     <p></p>
     <h3 align="center">Список ресторанов</h3>
     <p></p>
@@ -8,7 +26,8 @@
         <thead>
         <tr>
             <td width="10%"><b>ID</b></td>
-            <td width="60%"><b>Название</b></td>
+            <td width="20%"><b>Название</b></td>
+            <td width="40%"><b>Адрес</b></td>
             <td width="30%" ng-show="showDelButton"><b>Действие</b></td>
             <td width="30%" ng-show="!showDelButton" colspan="2" align="center"><b>Действие</b></td>
         </tr>
@@ -16,7 +35,8 @@
         <tbody>
         <tr ng-repeat="r in RestaurantsList">
             <td width="10%">{{r.id}}</td>
-            <td width="60%">{{r.title}}</td>
+            <td width="20%">{{r.title}}</td>
+            <td width="40%">{{restaurantInfoList[r.restaurant_info_id-1].address}}</td>
 
             <td width="30%" ng-show="showDelButton">
                 <button class="btn btn-primary" ng-click="showRestaurantPage(r)">Страница ресторана</button>
@@ -31,25 +51,38 @@
         </tbody>
     </table>
 
-    <div align="center"  ng-show="!showAddRestaurantForm">
+
+
+
+
+    <div align="center" ng-show="!showAddRestaurantForm">
         <h3 align="center">Добавить ресторан в БД</h3>
         <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center">
             <thead>
             <tr>
-                <td width="50%"><b>Название ресторана</b></td>
-                <td width="20%">&nbsp;</td>
-                <td width="30%"><b>Действие</b></td>
+                <td align="center"><b>Название ресторана</b></td>
+                <td align="center"><b>email</b></td>
+                <td align="center"><b>Пароль</b></td>
+                <td align="center"><b>Действие</b></td>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <form class="form-floating input-group">
-                    <td width="50%"><input class="form-control" type="text" ng-model="newRestaurant.title" id="title" name="title" placeholder="Название ресторана" required/></td>
-                    <td width="20%">&nbsp;</td>
-                    <td width="30%"><button class="btn btn-primary" type="button" ng-click="addNewRestaurant()">Добавить в список</button></td>
+                    <td><input class="form-control" type="text" ng-model="newRestaurant.title" id="title" name="title" placeholder="Название ресторана" required/></td>
+                    <td><input class="form-control" type="text" ng-model="newRestaurant.email" id="email" name="email" placeholder="email" required/></td>
+                    <td><input class="form-control" type="text" ng-model="newRestaurant.password" id="password" name="password" placeholder="Пароль" required/></td>
+                    <td><button class="btn btn-primary" type="button" ng-click="addNewRestaurant()">Добавить в список</button></td>
                 </form>
+            </tr>
+            <tr class="alert alert-danger" ng-hide="!error">
+                <td colspan="4">
+                    <p>При регистрации возникла проблема:</p>
+                    <p>{{error.message}}</p>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
+
 </div>

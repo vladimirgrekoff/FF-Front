@@ -12,6 +12,7 @@ angular.module('findFood').controller('dishVerificationController', function ($r
 
 
     $scope.currentRestaurantTitle = $localStorage.currentRestaurant.title;
+    $scope.currentNutritionist = $localStorage.currentNutritionist;
 
     $scope.item = $localStorage.item;
 
@@ -28,7 +29,7 @@ angular.module('findFood').controller('dishVerificationController', function ($r
     $scope.dishHealthy;
 
     $scope.updateRequestItem = function() {
-            $scope.item.verified = true;
+            $scope.item.lastname = $scope.currentNutritionist.info_dto.lastname;
             $scope.item.dishHealthy = $scope.dishHealthy;
             $scope.item.dishApproved = $scope.dishApproved;
             $http.put(contextPath + '/requests', $scope.item)
@@ -43,6 +44,7 @@ angular.module('findFood').controller('dishVerificationController', function ($r
         if ($scope.isEmptyDishData() == false){
             $scope.dish.healthy = $scope.dishHealthy;
             $scope.dish.approved = $scope.dishApproved;
+            $scope.dish.nutritionist_lastname = $scope.currentNutritionist.info_dto.lastname;
                 $http.put(contextPath + '/dishes', $scope.dish)
                     .then(function (response) {
                         $scope.loadDishById();

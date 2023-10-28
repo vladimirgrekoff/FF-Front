@@ -1,0 +1,92 @@
+<div class="container" ng-controller="clientsController">
+
+
+    <table class="table" cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr><td width="10%" colspan="2">показать всех</td><td width="30%" colspan="2">поиск по логину (без учета регистра)</td><td><p>&nbsp;</p></td><td width="30%" colspan="2">поиск по email</td></tr>
+        <tr>
+            <td width="10%">
+                <button class="btn btn-outline-success" style="width: 100%;" type="button" ng-click="loadPersons()">Показать</button>
+            </td>
+            <td width="10%"><p>&nbsp;</p></td>
+            <form novalidate ng-submit="loadPersons()">
+                <td width="30%">
+                    <input type="text" class="form-control" id="part_username" name="part_username" placeholder="Полный или часть логина" ng-model="part_username">
+                </td>
+                <td width="10%">
+                    <button class="btn btn-outline-primary" style="width: 100%;" type="button" ng-click="loadPersons()">Найти</button>
+                </td>
+            </form>
+            <td><p>&nbsp;</p></td>
+            <form novalidate ng-submit="loadPersons()">
+                <td width="30%">
+                    <input type="text" class="form-control" id="part_email" name="part_email" placeholder="Полный или часть email" ng-model="part_email">
+                </td>
+                <td width="10%">
+                    <button class="btn btn-outline-primary" style="width: 100%;" type="button" ng-click="loadPersons()">Найти</button>
+                </td>
+            </form>
+        </tr>
+    </table>
+    <h3 align="center">Список пользователей</h3>
+    <table class="table table-striped" width="80%" align="left" >
+        <thead class="thread-light">
+        <tr>
+            <td><b>ID</b></td>
+            <td><b>Имя пользователя</b></td>
+            <td><b>email</b></td>
+            <td><b>Дата создания</b></td>
+            <td><b>Дата изменения</b></td>
+            <td colspan="2" align="center"><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in PersonsList">
+            <td>{{p.id}}</td>
+            <td>{{p.username}}</td>
+            <td>{{p.email}}</td>
+            <td>{{p.createdAt}}</td>
+            <td>{{p.updatedAt}}</td>
+            <td align="right"><button class="btn btn-outline-danger" ng-click="deletePerson(p.id, p.email)">Удалить</button></td>
+            <td ng-show="hasRole('ADMIN')"><button class="btn btn-outline-warning" ng-click="editPersonProfile(p.email, p.username)">Изменить</button></td>
+        </tr>
+        <tr>
+            <td colspan="5"><b><i>Всего пользователей в списке:</i></b></td>
+            <td colspan="2" align="center"><b>{{PersonsList.length}}</b></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div align="center" ng-show="!showAddPersonForm">
+        <div  class="position-fixed-bottom-0" role="dialog" data-bs-toggle="dropdown">
+        <h3 align="center">Добавить нового пользователя</h3>
+        <table class="table table-striped" cellpadding="0" cellspacing="0" align="center">
+            <thead class="thread-light">
+            <tr>
+                <td align="center"><b>Имя пользователя</b></td>
+                <td align="center"><b>Пароль</b></td>
+                <td align="center"><b>email</b></td>
+                <td align="center"><b>Действие</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <form novalidate>
+                    <td><input class="form-control" type="text" ng-model="newUser.name" id="name" name="name" placeholder="Имя пользователя" required/></td>
+                    <td><input class="form-control" type="text" ng-model="newUser.email" id="email" name="email" placeholder="email" required/></td>
+                    <td><input class="form-control" type="text" ng-model="newUser.password" id="password" name="password" placeholder="Пароль" required/></td>
+                    <td><button class="btn btn-outline-primary" type="button" ng-click="addNewUser()">Добавить в список</button></td>
+                </form>
+            </tr>
+            <tr class="alert alert-danger" ng-hide="!error">
+                <td colspan="4">
+                    <p>При регистрации возникла проблема:</p>
+                    <p>{{error.message}}</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+
+</div>

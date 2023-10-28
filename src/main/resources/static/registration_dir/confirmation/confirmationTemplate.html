@@ -1,0 +1,39 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"/>
+
+<div class="container"  ng-controller="confirmationController">
+
+    <form class="form-signin" ng-submit="confirmData()">
+        <div ng-show="!ok">
+
+            <h3 align="center" class="form-signin-heading">Подтверждение данных регистрации</h3>
+            <p align="center">Для изменения пароля или адреса электронной почты, пожалуйста, заполните эту форму для подтверждения Ваших данных.</p>
+            <div class="alert alert-danger" ng-hide="!error">
+                <p>При проверке данных возникла проблема:</p>
+                <p>{{error.message}}</p>
+            </div>
+            <hr>
+            <label for="email" class="sr-only"><b>Email</b></label>
+            <input type="text" id="email" name="email" class="form-control"  placeholder="Введите Email (логин)" ng-model="client.email" required>
+            <hr>
+            <label for="password" class="sr-only"><b>Пароль</b></label>
+            <input type="password" id="password" name="password" class="form-control"  placeholder="Введите пароль" ng-model="client.password" required>
+
+
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Проверить</button>
+
+        </div>
+        <div class="alert alert-success" ng-hide="!ok">
+            <h3 align="center" class="form-signin-heading">Данные регистрации подтверждены</h3>
+            <hr>
+            <p><b>Переход на страницу:</b></p>
+            <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="showPasswordUpdatePage()">Изменения пароля</button>
+            <hr>
+            <p><b>Переход на страницу:</b></p>
+            <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="showEmailUpdatePage()">Изменения email:</button>
+            <p>&nbsp;</p>
+        </div>
+        <br>
+    </form>
+</div>

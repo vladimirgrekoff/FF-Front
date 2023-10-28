@@ -1,6 +1,6 @@
 angular.module('findFood').controller('selectRestaurantController', function ($rootScope, $scope, $http, $location, $localStorage) {
 
-//    const contextPath = 'http://localhost:8189/ff-restaurants/api/v1';
+
     const contextPath = 'http://localhost:5555/rest/api/v1';
 
     //включение дополнительных пунктов меню для страницы

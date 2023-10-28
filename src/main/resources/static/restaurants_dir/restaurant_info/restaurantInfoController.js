@@ -26,6 +26,11 @@ angular.module('findFood').controller('restaurantInfoController', function ($roo
 
 
 
+    //переходы
+    $scope.showConfirmationInfoPage = function () {
+        $location.path('confirmation');
+    };
+
 
 
 

@@ -1,0 +1,41 @@
+<div class="container" ng-controller="adminController">
+    <h1 align="center">Страница администратора {{currentClientName}}</h1>
+
+    <table class="table table-striped" width="80%" align="center">
+        <thead class="thread-light">
+        <tr>
+            <td colspan="2"><h3 align="center"><b>{{currentClient.info_dto.firstname}}, Вы можете перейти:</b></h3></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="hasRole('ADMIN')">
+            <td><b>на страницу с профилем:</b></td>
+            <td><button  class="btn btn-outline-primary" style="width: 100%;" ng-click="showProfilePage()">Профиль</button></td>
+        </tr>
+        <tr ng-show="hasRole('ADMIN')">
+            <td><b>на страницу с анкетой:</b></td>
+            <td><button class="btn btn-outline-primary" style="width: 100%;" ng-click="showQuestionnairePage()">Анкета</button></td>
+        </tr>
+        <tr ng-show="hasRole('ADMIN')">
+            <td><b>на страницу подбора меню:</b></td>
+            <td><button class="btn btn-outline-primary" style="width: 100%;" ng-click="showMenuPage()">Подбор меню</button></td>
+        </tr>
+        <tr ng-show="hasRole('ADMIN')">
+            <td><b>на страницу редактирования списка ресторанов:</b></td>
+            <td><button class="btn btn-outline-primary" style="width: 100%;" ng-click="showRestaurantsPage()">Правка списка</button></td>
+        </tr>
+        <tr ng-show="hasRole('ADMIN')">
+            <td><b>на страницу редактирования списка пользователей:</b></td>
+            <td><button class="btn btn-outline-primary" style="width: 100%;" ng-click="showClientsPage()">Правка списка</button></td>
+        </tr>
+        <tr ng-show="hasRole('ADMIN')">
+            <td><b>на страницу редактирования сотрудников сайта:</b></td>
+            <td><button class="btn btn-outline-primary" style="width: 100%;" ng-click="showEmployeesPage()">Правка списка</button></td>
+        </tr>
+        <tr>
+            <td><b>покинуть сайт:</b></td>
+            <td><button class="btn btn-outline-danger" style="width: 100%;" ng-click="tryToLogout()">Выход</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

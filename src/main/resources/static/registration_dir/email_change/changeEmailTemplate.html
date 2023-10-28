@@ -1,0 +1,33 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"/>
+
+<div class="container"  ng-controller="changeEmailController">
+
+    <form class="form-signin" ng-submit="changeEmail()">
+        <div>
+
+            <h3 align="center" class="form-signin-heading">Изменение email</h3>
+            <p align="left"><b>Внимание:</b> После успешного изменения email Ваш сеанс работы будет завершен,
+                Вы будете переведены на главную страницу для входа на сайт с новыми данными.</p>
+            <div class="alert alert-danger" ng-hide="!error">
+                <p>При изменении email возникла проблема:</p>
+                <p>{{error.message}}</p>
+            </div>
+            <hr>
+            <label for="password" class="sr-only"><b>Пароль</b></label>
+            <input type="password" id="password" name="password" class="form-control"  placeholder="Введите свой пароль" ng-model="client.password" required>
+            <hr>
+            <label for="email" class="sr-only"><b>Текущий email</b></label>
+            <input type="email" id="email" name="email" class="form-control"  placeholder="Введите свой email" ng-model="client.email" required>
+            <!--            <hr>-->
+            <label for="newEmail" class="sr-only"><b>Новый email</b></label>
+            <input type="email" id="newEmail" name="newEmail" class="form-control" placeholder="Введите новый email" ng-model="client.newEmail" required>
+            <hr>
+
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Изменить</button>
+
+        </div>
+        <br>
+    </form>
+</div>

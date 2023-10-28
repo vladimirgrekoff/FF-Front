@@ -23,16 +23,28 @@
             <td><b>Группа блюд</b></td><td>{{group_dish_title}}</td>
             <td>
                 <form name="groupSelect" novalidate>
-                <select class="form-select" id="groupDishTitle" name="groupDishTitle" ng-model="groupDishTitle" ng-init="selected=isInitGroupValue()" required>
-                    <option value="">Выбор группы</option>
-                    <option ng-repeat="group in groupList" value="{{group.title}}">{{group.title}}</option>
-                </select>
+                    <select class="form-select" id="groupDishTitle" name="groupDishTitle" ng-model="groupDishTitle" ng-init="selected=isInitGroupValue()" required>
+                        <option value="">Выбор группы</option>
+                        <option ng-repeat="group in groupList" value="{{group.title}}">{{group.title}}</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        <tr ng-show="hasRole('RESTAURANT')">
+            <td><b>Категория блюд</b></td><td>{{category_title}}</td>
+            <td>
+                <form name="categorySelect" novalidate>
+                    <select class="form-select" id="categoryTitle" name="categoryTitle" ng-model="categoryTitle" ng-init="selected=isInitCategoryValue()" required>
+                        <option value="">Выбор категории</option>
+                        <option ng-repeat="category in categoriesList" value="{{category.title}}">{{category.title}}</option>
+                    </select>
                 </form>
             </td>
         </tr>
         <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Название</b></td><td>{{title}}</td><td>{{title}}</td></tr>
         <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Описание</b></td><td>{{description}}</td><td>{{description}}</td></tr>
         <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Группа блюд</b></td><td>{{group_dish_title}}</td><td>{{group_dish_title}}</td></tr>
+        <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Категория блюд</b></td><td>{{category_title}}</td><td>{{category_title}}</td></tr>
         <tr>
             <td><b>Калории</b></td><td>{{calories}}</td><td><input class="form-control" type="number" ng-model="editedDish.calories" id="calories" name="calories" placeholder="Калории" required/></td>
         </tr>
@@ -49,9 +61,10 @@
             <td><b>Стоимость</b></td><td>{{price}}</td><td><input class="form-control" type="number" ng-model="editedDish.price" id="price" name="price" placeholder="Стоимость" required/></td>
         </tr>
         <tr ng-show="hasRole('NUTRITIONIST')"><td><b>Стоимость</b></td><td>{{price}}</td><td>{{price}}</td></tr>
+        <tr>
         <td align="left"><button class="btn btn-outline-danger btn-sm" style="width: 100%;" type="button" ng-click="updateDish()">Сохранить</button></td>
-        <td><button class="btn btn-outline-warning btn-sm" style="width: 100%;" ng-click="undoChanges();isInitGroupValue()">Отменить</button></td></td>
-        <td><button type="button" class="btn btn-outline-success btn-sm" style="width: 100%;" ng-click="showDishPage()">Вернуться на страницу блюда</button></td></td>
+        <td><button class="btn btn-outline-warning btn-sm" style="width: 100%;" ng-click="undoChanges();isInitGroupValue();isInitCategoryValue()">Отменить</button></td>
+        <td><button type="button" class="btn btn-outline-success btn-sm" style="width: 100%;" ng-click="showDishPage()">Вернуться на страницу блюда</button></td>
         </tr>
         </tbody>
     </table>

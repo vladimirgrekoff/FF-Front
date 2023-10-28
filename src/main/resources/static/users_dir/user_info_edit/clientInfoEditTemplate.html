@@ -1,0 +1,60 @@
+<div ng-controller="clientInfoEditController">
+    <p>&nbsp;</p>
+
+    <div class="container" align="center">
+        <h4 align="center">Правка профиля пользователя {{currentClientName}}</h4>
+
+        <p align="center" ng-show="hasRole('ADMIN') || hasRole('NUTRITIONIST')"><b>Примечание:</b> <sup>*</sup> - для сотрудников обязательно, <sup>**</sup> - адрес места работы</p>
+        <p align="center" ng-show="!hasRole('ADMIN') && !hasRole('NUTRITIONIST')"><b>Примечание:</b> пункты, помеченные <sup>*</sup> и <sup>**</sup> - заполнить по желанию</p>
+        <table class="table table-striped" width="80%" cellpadding="0" cellspacing="0" align="center" ng-model="currentClient">
+            <thead>
+            <tr>
+                <td width="30%"><b>Пункт профиля</b></td><td width="30%"><b>Текущее значение</b></td><td width="30%"><b>Новое значение</b></td>
+            </tr>
+            </thead>
+            <tr>
+                <td>Имя <sup>*</sup></td><td>{{firstname}}</td><td><input class="form-control" type="text" ng-model="editedClientInfo.firstname" id="firstname" name="firstname" placeholder="Имя" required/></td>
+            </tr>
+            <tr>
+                <td>Отчество <sup>*</sup></td><td>{{surname}}</td><td><input class="form-control" type="text" ng-model="editedClientInfo.surname" id="surname" name="surname" placeholder="Отчество" required/></td>
+            </tr>
+            <tr>
+                <td>Фамилия <sup>*</sup></td><td>{{lastname}}</td><td><input class="form-control" type="text" ng-model="editedClientInfo.lastname" id="lastname" name="lastname" placeholder="Фамилия" required/></td>
+            </tr>
+            <tr>
+                <td>Почтовый индекс <sup>**</sup></td><td>{{index}}</td><td><input class="form-control" type="number" ng-model="editedClientInfo.index" id="index" name="index" placeholder="Почтовый индекс" required/></td>
+            </tr>
+            <tr>
+                <td>Город</td><td>{{city}}</td><td><input class="form-control" type="text" ng-model="editedClientInfo.city" id="city" name="city" placeholder="Город" required/></td>
+            </tr>
+            <tr>
+                <td>Улица <sup>**</sup></td><td>{{street}}</td><td><input class="form-control" type="text" ng-model="editedClientInfo.street" id="street" name="street" placeholder="Улица" required/></td>
+            </tr>
+            <tr>
+                <td>Дом <sup>**</sup></td><td>{{house}}</td><td><input class="form-control" type="number" ng-model="editedClientInfo.house" id="house" name="house" placeholder="Дом" required/></td>
+            </tr>
+            <tr ng-show="hasRole('ADMIN') || hasRole('NUTRITIONIST')">
+                <td>Офис <sup>**</sup></td><td>{{apartment}}</td><td><input class="form-control" type="number" ng-model="editedClientInfo.apartment" id="apartment1" name="apartment1" placeholder="Офис" required/></td>
+            </tr>
+            <tr ng-show="!hasRole('ADMIN') && !hasRole('NUTRITIONIST')">
+                <td>Квартира <sup>**</sup></td><td>{{apartment}}</td><td><input class="form-control" type="number" ng-model="editedClientInfo.apartment" id="apartment2" name="apartment2" placeholder="Квартира" required/></td>
+            </tr>
+            <tr>
+                <td>Номер телефона</td><td>{{phoneNumber}}</td><td><input class="form-control" type="text" ng-model="editedClientInfo.phoneNumber" id="phoneNumber" name="phoneNumber" placeholder="Номер телефона" required/></td>
+            </tr>
+<!--            <tr>-->
+<!--                <td>E-mail</td><td>{{email}}</td><td>{{editedClientInfo.email}}</td>-->
+<!--            </tr>-->
+            <tr>
+                <td>Имя в Telegram <sup>**</sup></td><td>{{telegramName}}</td><td><input class="form-control" type="text" ng-model="editedClientInfo.telegramName" id="telegramName" name="telegramName" placeholder="Имя в Telegram" required/></td>
+            </tr>
+            <tr>
+                <td align="left"><button class="btn btn-outline-danger btn-sm" style="width: 100%;" type="button" ng-click="updateClientInfo()">Сохранить</button></td>
+                <td><button class="btn btn-outline-warning btn-sm" style="width: 100%;" ng-click="undoChanges()">Отменить</button></td>
+                <td><button type="button" class="btn btn-outline-success btn-sm" style="width: 100%;" ng-click="showProfilePage()">Вернуться на страницу профиля</button></td>
+            </tr>
+            <tbody>
+        </table>
+
+    </div>
+</div>

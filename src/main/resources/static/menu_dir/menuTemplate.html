@@ -1,0 +1,99 @@
+<div class="container" ng-controller="menuController">
+    <p>&nbsp;</p>
+    <h2 align="center">Страница подбора меню пользователя {{username}}</h2>
+    <p>&nbsp;</p>
+    <h4 align="center">Подготовка запроса меню</h4>
+    <table class="table" cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr>
+            <form class="form-select">
+            <td width="30%">Количество приемов пищи в день:</td>
+            <td width="5%">
+                <select class="form-select" id="times_to_eat" name="times_to_eat" ng-init="selected" ng-model="times_to_eat" required>
+                    <option value="" DISABLED>0</option>
+                    <option value="3" selected>3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td width="5%">&nbsp;</td>
+            <td width="10%">Запрос:</td>
+            <td width="10%">
+<!--                <button class="btn btn-outline-success" style="width: 100%;" type="button" ng-click="getGoal()">Отправить</button>-->
+                <button class="btn btn-outline-primary" style="width: 100%;" type="button" ng-click="getMenu()">Отправить</button>
+            </td>
+            <td width="5%">&nbsp;</td>
+            <td width="15%">Очистка запроса:</td>
+            <td width="10%">
+                <button class="btn btn-outline-warning" style="width: 100%;" type="button" ng-click="clearRequestData();checkMenuByCategories()">Сбросить</button>
+            </td>
+            </form>
+        </tr>
+    </table>
+    <p>&nbsp;</p>
+
+    <div class="container" align="center" ng-hide="!ok">
+        <h4 align="center">Информация о полученном меню</h4>
+        <table class="table table-striped" width="70%" cellpadding="0" cellspacing="0" align="center">
+            <thead>
+            <tr>
+                <td><b>Пункт</b></td><td><b>Значение</b></td><td><b>Пункт</b></td><td><b>Значение</b></td>
+            </tr>
+            </thead>
+            <tr>
+                <td><b>Калорийность меню</b></td><td><b>{{clientMenu.calories}}</b></td>
+                <td><b>Содержание белков</b></td><td><b>{{clientMenu.proteins}}</b></td>
+            </tr>
+            <tr>
+                <td><b>Содержание жиров</b></td><td><b>{{clientMenu.fats}}</b></td>
+                <td><b>Содержание углеводов</b></td><td><b>{{clientMenu.carbohydrates}}</b></td>
+            </tr>
+            <tr>
+                <td colspan="3"><b>Стоимость блюд меню</b></td><td><b>{{clientMenu.price}}</b></td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+
+        <h4 align="center">Меню на день</h4>
+<!--        <p>&nbsp;</p>-->
+
+        <div  ng-repeat="m in menuByCategories">
+            <caption><b><i><u>{{m.category}}</u></i></b></caption>
+            <br><br>
+            <table class="table table-striped" width="70%" cellpadding="0" cellspacing="0" align="center">
+                <thead>
+                <tr>
+                    <td><i>ID</i></td>
+                    <td><i>Название</i></td>
+                    <td><i>Описание</i></td>
+                    <td><i>Калории</i></td>
+                    <td><i>Белки</i></td>
+                    <td><i>Жиры</i></td>
+                    <td><i>Углеводы</i></td>
+                    <td><i>Стоимость</i></td>
+                    <td><i>Ресторан</i></td>
+                    <td align="center"><i>Подробности</i></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="d in m.dishes">
+                    <td>{{d.id}}</td>
+                    <td>{{d.title}}</td>
+                    <td>{{d.description}}</td>
+                    <td>{{d.calories}}</td>
+                    <td>{{d.proteins}}</td>
+                    <td>{{d.fats}}</td>
+                    <td>{{d.carbohydrates}}</td>
+                    <td>{{d.price}}</td>
+                    <td>{{d.restaurant}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="showDishPage(d)">Информация</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>&nbsp;</p>
+
+    </div>
+</div>

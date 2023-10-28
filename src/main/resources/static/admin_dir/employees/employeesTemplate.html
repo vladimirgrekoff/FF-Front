@@ -1,0 +1,54 @@
+<div class="container" ng-controller="employeesController">
+
+    <table class="table" cellpadding="0" cellspacing="0" width="80%" align="center">
+        <tr><td width="40%">на странице</td><td width="40%" colspan="2">поиск  по email</td></tr>
+        <tr>
+            <td width="40%">
+                <form novalidate ng-submit="loadEmployees()">
+                    <select class="form-select" id="by_role" name="by_role" ng-init = "selected" ng-model="by_role" ng-click="loadEmployees()" required>
+                        <option value="" selected>Все сотрудники</option>
+                        <option value="ADMIN">Администраторы</option>
+                        <option value="NUTRITIONIST">Диетологи</option>
+                    </select>
+                </form>
+            </td>
+            <form novalidate ng-submit="loadEmployees()">
+            <td>
+                <input type="text" class="form-control" id="part_email" name="part_email" placeholder="Полный или часть email сотрудника" ng-model="part_email">
+            </td>
+            <td>
+                <button class="btn btn-outline-warning" style="width: 100%;" type="button" ng-click="loadEmployees()">Найти</button>
+            </td>
+            </form>
+        </tr>
+    </table>
+    <h3 align="center">Список сотрудников</h3>
+    <p><b>Примечание:</b> </p>
+    <ol>
+        <li>Добавление сотрудника производится через добавление ролей выбранному пользователю в списке пользователей.</li>
+        <li>Удаление сотрудника приводит к удалению всех ролей, кроме роли CLIENT. Сотрудник остается в списке пользователей.</li>
+    </ol>
+    <table class="table table-striped" width="80%" align="left" >
+        <thead class="thread-light">
+        <tr>
+            <td><b>ID</b></td>
+            <td><b>email</b></td>
+            <td><b>Роли сотрудника</b></td>
+            <td colspan="2" align="center"><b>Действие</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="e in EmployeesList">
+            <td>{{e.id}}</td>
+            <td>{{e.email}}</td>
+            <td>{{allRolesToString(e.roles)}}</td>
+            <td align="right"><button class="btn btn-outline-danger" ng-click="deleteEmployee(e)">Удалить</button></td>
+            <td ng-show="hasRole('ADMIN')"><button class="btn btn-outline-warning" ng-click="editEmployeeProfile(e.email)">Изменить</button></td>
+        </tr>
+        <tr>
+            <td colspan="3"><b><i>Всего пользователей в списке:</i></b></td>
+            <td colspan="2" align="center"><b>{{EmployeesList.length}}</b></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

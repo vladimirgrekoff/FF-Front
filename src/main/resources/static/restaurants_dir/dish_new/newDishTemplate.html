@@ -51,7 +51,7 @@
         <tr>
             <td><b>Категория блюд</b></td>
             <td>
-                <form name="groupSelect" novalidate>
+                <form name="categorySelect" novalidate>
                     <select class="form-select" id="categoryTitle" name="categoryTitle" ng-model="categoryTitle" ng-init="selected" required>
                         <option value="" selected>Выбор категории</option>
                         <option ng-repeat="category in categoriesList" value="{{category.title}}">{{category.title}}</option>
